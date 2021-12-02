@@ -13,6 +13,7 @@ public class Test {
 		System.out.println("GoHome");
 		
 		System.out.println("s");
+		System.out.println("다음사람");
 	
 	}
 
