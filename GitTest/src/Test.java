@@ -14,6 +14,7 @@ public class Test {
 		
 		System.out.println("s");
 		System.out.println("다음사람");
+		System.out.println("다다음사람");
 	
 	}
 
