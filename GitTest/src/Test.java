@@ -8,6 +8,8 @@ public class Test {
 		//3. Encoding ¹æ½Ä(UTF-8)
 		System.out.println("First Code!");
 		
+		System.out.println("GoHome");
+	
 	}
 
 }
