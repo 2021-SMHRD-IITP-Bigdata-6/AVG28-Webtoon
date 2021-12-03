@@ -11,6 +11,7 @@ public class Test {
 		System.out.println("First Code!");
 		
 		System.out.println("GoHome");
+		System.out.println("123");
 		
 		System.out.println("s");
 		System.out.println("다음사람");
