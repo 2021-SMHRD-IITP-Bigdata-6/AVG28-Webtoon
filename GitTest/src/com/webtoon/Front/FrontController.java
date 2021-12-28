@@ -74,13 +74,13 @@ public class FrontController extends HttpServlet {
 		}else if(command.equals("check.do")) {
 			
 			// 1. 파라미터 수집
-			String email = request.getParameter("email");
+			String user_id = request.getParameter("user_id");
 			
 			// 2. DAO 객체 생성
 			usersDAO dao = new usersDAO();
 			
 			// 3. DAO 객체의 메소드 사용
-			boolean check = dao.emailCheck(email);
+			boolean check = dao.emailCheck(user_id);
 			
 			// 중복된 아이디 입니다.
 			// if(res == "중복된 아이디 입니다.") 라고 쓸 수도 있지만.
@@ -91,7 +91,7 @@ public class FrontController extends HttpServlet {
 			// 5. 응답
 			out.print(check);
 			
-		}else if(command.equals("searchMember.do")) {
+		}else if(command.equals("searchWebtoon.do")) {
 			
 			com = new SearchService();
 			com.execute(request, response);

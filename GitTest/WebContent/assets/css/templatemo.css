@@ -189,3 +189,115 @@ body, ul, li, p, a, label, input, div {
 
 /* Extra large devices (large desktops, 1200px and up)*/
 @media (min-width: 1200px) {}
+
+
+.tag_select{
+position:relative;
+width:100%;
+text-align: center;
+padding: 10%;
+
+}
+
+.tag_select2{
+  position: relative;
+  margin-top: 30px;
+  margin-bottom: 80px;
+
+  }
+
+  .tag_btn {
+  border-radius: 40%;
+  
+  width: 130px;
+  
+  height: 50px;
+
+  background-color: rgb(121, 121, 121);
+  
+  position: relative;
+  
+  border: none;
+  
+  color: white;
+  
+  padding: 10px 20px;
+  
+  text-align: center;
+  
+  text-decoration: none;
+  
+  display: unset;
+  
+  font-size: 16px;
+  
+  margin: 2px 2px;
+  
+  cursor: pointer;
+    
+  }
+
+.clicked{
+  border-radius: 40%;
+  
+  width: 130px;
+  
+  height: 50px;
+  
+  background-color: rgb(214, 94, 94);
+
+  position: relative;
+  
+  border: none;
+  
+  color: white;
+  
+  padding: 10px 20px;
+  
+  text-align: center;
+  
+  text-decoration: none;
+  
+  display: unset;
+  
+  font-size: 16px;
+  
+  margin: 2px 2px;
+  
+  cursor: pointer;
+}
+
+#btn1{
+  border-radius: 50%;
+  background-color: dodgerblue;
+  
+
+
+  position: relative;
+  
+  border: none;
+  
+  color: white;
+  
+  padding: 20px 30px;
+  
+  text-align: center;
+  
+  text-decoration: none;
+  
+  display: ruby;
+  
+  font-size: 16px;
+  
+  margin: 2px 2px;
+  
+  cursor: pointer;
+    
+}
+#btn1:hover {
+  background-position: right;
+  background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
+  background-position: left;
+  background-size: 200%;
+}
+

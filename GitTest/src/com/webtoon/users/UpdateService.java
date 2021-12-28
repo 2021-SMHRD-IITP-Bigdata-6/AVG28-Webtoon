@@ -21,19 +21,21 @@ public class UpdateService implements Command {
 	      
 	      usersDTO dto = (usersDTO) session.getAttribute("dto");
 	      
-	      String user_email = dto.getUser_email();
+	      String user_id = dto.getUser_id();
 	      String user_pw = request.getParameter("user_pw");
+	      String user_email = request.getParameter("user_email");
 	      String user_tel = request.getParameter("user_tel");
-	      String user_address = request.getParameter("user_address");
+	      String user_addr = request.getParameter("user_addr");
+	      String user_joindate = request.getParameter("user_joindate");
 	      
 	   // ------------------ 위 코드는 servlet에서만 선언가능
 	      
 	      usersDAO dao = new usersDAO();
-	      int cnt = dao.Update(user_email, user_pw, user_tel, user_address);
+	      int cnt = dao.Update(user_id, user_pw, user_email, user_tel, user_addr, user_joindate);
 	      
 	      if (cnt > 0) {
 	     	 
-	    	  usersDTO update_dto =  new usersDTO(user_email, user_tel, user_address);
+	    	  usersDTO update_dto =  new usersDTO(user_id, user_pw, user_email, user_tel, user_addr, user_joindate);
 	         
 //	         dto = new memberDTO(dto.getEmail(), tel, address);
 //	         session.setAttribute("dto",dto);

@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.inter.Command;
-import com.usersDAO.usersDAO;
-import com.webtoon.DTO.usersDTO;
+import com.usersDAO.webtoonDAO;
+import com.webtoon.DTO.webtoonDTO;
 
 public class SearchService implements Command {
 
@@ -19,13 +19,13 @@ public class SearchService implements Command {
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String user_email = request.getParameter("email");
+		String webtoon_name = request.getParameter("webtoon_name");
 		
 		// DAO 按眉 积己
-		usersDAO dao = new usersDAO();
+		webtoonDAO dao = new webtoonDAO();
 		
 		// dao狼 皋家靛
-		ArrayList<usersDTO> list = dao.selectMember(user_email);
+		ArrayList<webtoonDTO> list = dao.searchWebtoon(webtoon_name);
 		
 		// ArraryList -> json
 		Gson gson = new Gson();
