@@ -15,6 +15,7 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="assets/js/jquery-1.11.0.min.js"></script>
 
     <link rel="apple-touch-icon" href="assets/img/apple-icon.png">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
@@ -225,7 +226,9 @@
     		<script src="assets/js/bootstrap.bundle.min.js"></script>
     		<script src="assets/js/custom.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+
 			<script type="text/javascript">
+
 				function userSearch() {
 					
 					$.ajax({
