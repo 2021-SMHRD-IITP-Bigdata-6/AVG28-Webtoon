@@ -56,9 +56,12 @@ https://templatemo.com/tm-559-zay-shop
                     <a href = "login.jsp" class="navbar-sm-brand text-light text-decoration-none">로그인&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <!-- 회원가입으로 이동 -->
                     <a href = "join.jsp" class="navbar-sm-brand text-light text-decoration-none">회원가입</a>
-                    <%}else { %>
+                    <%}else if(dto.getUser_yesno() == "no"){ %>
                     <a href = "selection.jsp" class="navbar-sm-brand text-light text-decoration-none">찜목록&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <a href = "update.jsp" class="navbar-sm-brand text-light text-decoration-none">회원정보수정&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+                    <a href = "LogoutCon.do" class="navbar-sm-brand text-light text-decoration-none">로그아웃</a>
+                    <%}else { %>
+                    <a href = "selection.jsp" class="navbar-sm-brand text-light text-decoration-none">찜목록&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <a href = "LogoutCon.do" class="navbar-sm-brand text-light text-decoration-none">로그아웃</a>
                     <%} %>
                 </div>
@@ -93,9 +96,17 @@ https://templatemo.com/tm-559-zay-shop
                         <li class="nav-item">
                             <a class="nav-link" href="community_list.jsp">게시글</a>
                         </li>
+                        <%if(dto==null) {%>
+
+                        <%}else if(dto.getUser_yesno().equals("no")){ %>
                         <li class="nav-item">
                             <a class="nav-link" href="myPage.jsp">마이페이지</a>
                         </li>
+                        <%}else {%>
+                        <li class="nav-item">
+                            <a class="nav-link" href="adminMyPage.jsp">회원관리</a>
+                        </li>
+                        <%} %>
                     </ul>
                 </div>
                 <div class="navbar align-self-center d-flex">

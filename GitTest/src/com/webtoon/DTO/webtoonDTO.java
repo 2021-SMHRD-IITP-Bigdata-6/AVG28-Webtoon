@@ -78,6 +78,14 @@ public class webtoonDTO{
 		this.webtoon_keyword = webtoon_keyword;
 	}
 
+	@Override
+	public String toString() {
+		return "webtoonDTO [webtoon_seq=" + webtoon_seq + ", webtoon_name=" + webtoon_name + ", webtoon_writer="
+				+ webtoon_writer + ", webtoon_link=" + webtoon_link + ", webtoon_genre=" + webtoon_genre
+				+ ", webtoon_content=" + webtoon_content + ", webtoon_keyword=" + webtoon_keyword + "]";
+	}
+
+	
 	
 	
 }

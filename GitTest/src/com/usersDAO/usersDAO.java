@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import com.webtoon.DTO.usersDTO;
+import com.webtoon.DTO.webtoonDTO;
 
 public class usersDAO {
 
@@ -83,6 +84,7 @@ public class usersDAO {
 			psmt.setString(4, dto.getUser_tel());
 			psmt.setString(5, dto.getUser_addr());
 			psmt.setString(6, dto.getUser_gender());
+			
 
 			cnt = psmt.executeUpdate();
 
@@ -133,7 +135,7 @@ public class usersDAO {
 	    	  
 	    	 getConn();
 	         
-	         String sql = "update users set user_pw = ? , user_email = ?, user_tel = ? , user_addr= ? , where user_id = ? "; 
+	         String sql = "update t_user set user_pw = ? , user_email = ?, user_tel = ? , user_addr= ? , user_joindate = sysdate where user_id = ? "; 
 	      
 	         psmt = conn.prepareStatement(sql);
 
@@ -179,17 +181,17 @@ public class usersDAO {
 
 			if (rs.next()) {
 				
-				String getid = rs.getString(1);
 				String getpw = rs.getString(2);
 				String getemail = rs.getString(3);
 				String gettel = rs.getString(4);
 				String getaddr = rs.getString(5);
 				String getgender = rs.getString(6);
 				String getjoindate = rs.getString(7);
+				String getuser_yesno = rs.getString(8);
 				
 				if(dto1.getUser_pw().equals(getpw)) {
 					
-					dto = new usersDTO(dto1.getUser_id(), getpw, getemail, gettel, getaddr, getgender, getjoindate);
+					dto = new usersDTO(dto1.getUser_id(), getpw, getemail, gettel, getaddr, getgender, getjoindate, getuser_yesno);
 					
 				}
 				
@@ -210,7 +212,7 @@ public class usersDAO {
 		
 	}
 	
-	public ArrayList<usersDTO> selectMember(String user_id) {
+	public ArrayList<usersDTO> selectMember() {
 		
 		ArrayList<usersDTO> arr = new ArrayList<usersDTO>();
 		
@@ -283,7 +285,45 @@ public class usersDAO {
 		return check;
 	}
 	
+	public ArrayList<usersDTO> searchUser(String user_id){
+		System.out.println(user_id);
+		ArrayList<usersDTO> user_arr = new ArrayList<usersDTO>();
+		
+		try {
+			
+			getConn();
+			
+			String sql = "select * from t_user where user_id like ?";
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, "%" + user_id + "%");
+			rs= psmt.executeQuery(); 
+			
+			while (rs.next()) {
+				
+				String muser_id = rs.getString(1);
+				String user_email = rs.getString(3);
+				String user_tel = rs.getString(4);
+				String user_addr = rs.getString(5);
+				String user_joindate = rs.getString(7);
 
+				dto = new usersDTO(muser_id, user_email, user_tel, user_addr, user_joindate);
+				user_arr.add(dto);
+				System.out.println(muser_id);
+			} 
+			
+		} catch (Exception e) {
+			System.out.println("클래스파일 로딩 실패");
+			e.printStackTrace();
+			
+		} finally {
+			
+			close();
+			
+		}
+		return user_arr;
+		
+	}
 	
 	
 }

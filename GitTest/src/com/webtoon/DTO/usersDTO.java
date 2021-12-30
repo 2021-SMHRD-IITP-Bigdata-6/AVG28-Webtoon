@@ -35,14 +35,7 @@ public class usersDTO {
 		this.user_gender = user_gender;
 		this.user_joindate = user_joindate;
 	}
-
-	public usersDTO(String user_id, String user_pw) {
-		super();
-		this.user_id = user_id;
-		this.user_pw = user_pw;
-	}
-
-
+	
 	public usersDTO(String user_id, String user_pw, String user_email, String user_tel, String user_addr,
 			String user_gender) {
 		super();
@@ -53,6 +46,24 @@ public class usersDTO {
 		this.user_addr = user_addr;
 		this.user_gender = user_gender;
 	}
+
+
+	public usersDTO(String user_id, String user_email, String user_tel, String user_addr,
+			String user_joindate) {
+		super();
+		this.user_id = user_id;
+		this.user_email = user_email;
+		this.user_tel = user_tel;
+		this.user_addr = user_addr;
+		this.user_joindate = user_joindate;
+	}
+
+	public usersDTO(String user_id, String user_pw) {
+		super();
+		this.user_id = user_id;
+		this.user_pw = user_pw;
+	}
+
 
 	public String getUser_id() {
 		return user_id;

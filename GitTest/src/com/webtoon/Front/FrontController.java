@@ -19,6 +19,7 @@ import com.webtoon.users.DeleteService;
 import com.webtoon.users.JoinService;
 import com.webtoon.users.LoginService;
 import com.webtoon.users.UpdateService;
+import com.webtoon.users.UserSearchService;
 import com.webtoon.users.LogoutService;
 import com.webtoon.users.SearchService;
 
@@ -94,6 +95,11 @@ public class FrontController extends HttpServlet {
 		}else if(command.equals("searchWebtoon.do")) {
 			
 			com = new SearchService();
+			com.execute(request, response);
+			
+		}else if(command.equals("searchUser.do")) {
+			
+			com = new UserSearchService();
 			com.execute(request, response);
 			
 		}

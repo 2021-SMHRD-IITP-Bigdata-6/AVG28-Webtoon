@@ -26,8 +26,11 @@ public class JoinService implements Command {
 		String user_addr = request.getParameter("user_addr");
 		String user_gender = request.getParameter("user_gender");
 
+
 		usersDTO dto = new usersDTO(user_id, user_pw, user_email, user_tel, user_addr, user_gender);
 		
+		System.out.println(dto.getUser_yesno());
+		System.out.println(dto.getUser_joindate());
 		//1. memberDAO에 해당하는 기능메소드로 값 보내주기(객체생성, 메소드, 매개변수)
 		usersDAO dao = new usersDAO();
 		int cnt = dao.Join(dto); // memberDAO에 가로에 있는 값들을 보내주는 중
