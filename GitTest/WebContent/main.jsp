@@ -84,9 +84,17 @@
                         <li class="nav-item">
                             <a class="nav-link" href="community_list.jsp">게시글</a>
                         </li>
+                        <%if(dto==null) {%>
+
+                        <%}else if(dto.getUser_yesno().equals("no")){ %>
                         <li class="nav-item">
                             <a class="nav-link" href="myPage.jsp">마이페이지</a>
                         </li>
+                        <%}else {%>
+                        <li class="nav-item">
+                            <a class="nav-link" href="adminMyPage.jsp">회원관리</a>
+                        </li>
+                        <%} %>
                     </ul>
                 </div>
                 <div class="navbar align-self-center d-flex">
