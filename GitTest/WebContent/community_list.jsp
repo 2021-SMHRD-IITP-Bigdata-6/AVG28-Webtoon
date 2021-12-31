@@ -104,7 +104,7 @@ https://templatemo.com/tm-559-zay-shop
                         </li>
                         <%}else {%>
                         <li class="nav-item">
-                            <a class="nav-link" href="adminMyPage.jsp">회원관리</a>
+                            <a class="nav-link" href="selectMember.jsp">회원관리</a>
                         </li>
                         <%} %>
                     </ul>

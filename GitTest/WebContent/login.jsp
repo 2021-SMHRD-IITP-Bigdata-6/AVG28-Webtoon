@@ -1,3 +1,4 @@
+<%@page import="com.webtoon.DTO.usersDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -30,7 +31,7 @@
             </div>
         </form>
         <div class="caption">
-            <a href="Join.html">회원가입</a>
+            <a href="Join.jsp">회원가입</a>
         </div>
         
     </section>

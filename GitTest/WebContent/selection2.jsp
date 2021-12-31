@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.usersDAO.webtoonDAO"%>
 <%@page import="com.webtoon.DTO.webtoonDTO"%>
 <%@page import="com.webtoon.DTO.usersDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -20,9 +22,11 @@
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-    <link rel="stylesheet" href="assets/css/Sqmedia.css">
-    <link rel="stylesheet" href="assets/css/Sqstyle.css">
-    <title>Insert title here</title>
+    <link rel="stylesheet" href="assets/css/square_main.css">
+    
+        <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="assets/css/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/slick-theme.css">
 <!--
     
 TemplateMo 559 Zay Shop
@@ -111,7 +115,7 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="navbar align-self-center d-flex">
                     <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="웹툰 명">
                             <div class="input-group-text">
                                 <i class="fa fa-fw fa-search"></i>
                             </div>
@@ -154,273 +158,91 @@ https://templatemo.com/tm-559-zay-shop
     </div>
 
 
-    <!-- Close Header -->
-
-    <!-- Modal -->
-    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="w-100 pt-1 mb-5 text-right">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="" method="get" class="modal-content modal-body border-0 p-0">
-                <div class="input-group mb-2">
-                    <!-- 검색창 -->
-                    <input type="text" class="form-control" id="webtoon_search" name="q" placeholder="Search ...">
-                    <button type="submit" class="input-group-text bg-success text-light">
-                        <i class="fa fa-fw fa-search text-white"></i>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
     
     
     
     <section class="container py-5">
         <div class="row text-center pt-3">
             <div class="col-lg-6 m-auto">
-                <h1 class="h1">마이페이지</h1>
+                <h1 class="h1">웹툰 찜하기 목록</h1>
                 <p>
-                    My page
+                    My selelction
                 </p>
             </div>
         </div>
         
     </section>
-
-
-
-    <!-- Start Featured Product -->
+    
+        <!-- Start Featured Product -->
     <section class="bg-light">
         <div class="container py-5">
-            <!-- 게시판 들어가는 자리 -->
-            
-            
-            <div class="board_wrap">
-                <div class="board_title">
-                    <strong>게시판에 쓴 글목록</strong>
-                    <p>게시판에 입력한 글목록을 불러옵니다!</p>
-                </div>
-                <div class="board_list_wrap">
-                    <div class="board_list">
-                        <!-- 칼럼 -->
-                        <div class="top">
-                            <div class="num">번호</div>
-                            <div class="title">제목</div>
-                            <div class="writer">아이디</div>
-                            <div class="date">입력날짜</div>
-                            <div class="ctn1">삭제</div>
-                        </div>
-                        <!-- 칼럼끝 -->
-                        
-                        
-                        
-                        
-                        <!-- 게시글 반복문 시작 -->
-                        <div>
-                            <!-- 글번호 -->
-                            <div class="num">4</div>
-                            <!--  글제목 클릭시 내용을 볼수있습니다. -->
-                            <!-- 글링크 들어가야합니다 -->
-                            <div class="title"><a href="community_view.html">무협 재미있는거 추천받는다.오타쿠만 입장</a></div>
-                            <!-- 이름 -->
-                            <div class="writer">문성주</div>
-                            <!-- 작성일 -->
-                            <div class="date">2021.12.24</div>
-                            <!-- 조화수 -->
-                            <div class="ctn1">
-                                <button>삭제</button>
-                            </div>
-                        </div>
-                        <!-- 게시글 반복문 끝 -->
-
-
-
-                        <div>
-                            <!-- 글번호 -->
-                            <div class="num">3</div>
-                            <!--  글제목 클릭시 내용을 볼수있습니다. -->
-                            <!-- 글링크 들어가야합니다 -->
-                            <div class="title"><a href="community_view.html">신의탑 꼭봐라</a></div>
-                            <!-- 이름 -->
-                            <div class="writer">문성주</div>
-                            <!-- 작성일 -->
-                            <div class="date">2021.12.24</div>
-                            <!-- 조화수 -->
-                            <div class="ctn1">
-                                <button>삭제</button>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <!-- 글번호 -->
-                            <div class="num">2</div>
-                            <!--  글제목 클릭시 내용을 볼수있습니다. -->
-                            <!-- 글링크 들어가야합니다 -->
-                            <div class="title"><a href="community_view.html">ㅋㅋㅋㅋㅋㅋ</a></div>
-                            <!-- 이름 -->
-                            <div class="writer">문성주</div>
-                            <!-- 작성일 -->
-                            <div class="date">2021.12.24</div>
-                            <!-- 조화수 -->
-                            <div class="ctn1">
-                                <button>삭제</button>
-                            </div>
-                        </div>
-
-                        <div>
-                            <!-- 글번호 -->
-                            <div class="num">1</div>
-                            <!--  글제목 클릭시 내용을 볼수있습니다. -->
-                            <!-- 글링크 들어가야합니다 -->
-                            <div class="title"><a href="community_view.html">나혼랩 진짜 재밌던데</a></div>
-                            <!-- 이름 -->
-                            <div class="writer">문성주</div>
-                            <!-- 작성일 -->
-                            <div class="date">2021.12.24</div>
-                            <!-- 조화수 -->
-                            <div class="ctn1">
-                                <button>삭제</button>
-                            </div>
-                        </div>
+            <div class="row text-center py-3">
+                <div class="col-lg-6 m-auto">
+                    <h1 class="h1">Webtoon_search</h1>
+                    <div class="input-group mb-1">
+                        <!-- 웹툰 검색기능 -->
+                        <input type="text" class="form-control" id="webtoon_searchid" name="webtoon_search" placeholder="Search ...">
+                        <button onclick="webtoonSearch()" type="submit" class="input-group-text bg-success text-light">
+                            <i class="fa fa-fw fa-search text-white"></i>
+                        </button>
+                        <!-- 검색기능끝 -->
                     </div>
-                    
-                    <!-- 다음페이지로 넘어갈수있는 버튼 -->
-                    <!-- 글목록 페이지 이동 -->
-                    <div class="board_page">
-                        <a href="#" class="bt first"><<</a>
-                        <a href="#" class="bt prev"><</a>
-                        <a href="#" class="num on">1</a>
-                        <a href="#" class="num">2</a>
-                        <a href="#" class="num">3</a>
-                        <a href="#" class="num">4</a>
-                        <a href="#" class="num">5</a>
-                        <a href="#" class="bt next">></a>
-                        <a href="#" class="bt last">>></a>
-                    </div>
-                    <!-- 글목록 페이지 이동 종료 -->
-                    
                 </div>
             </div>
-
-            <!-- 게시판에 쓴글 목록 끝 -->
-
-
-
-            <!-- 내가쓴 댓글목록 게시판 -->
-            <div class="board_wrap">
-                <div class="board_title">
-                    <strong>게시판에 쓴 댓글목록</strong>
-                    <p>게시판에 입력한 댓글목록을 불러옵니다!</p>
-                </div>
-                <div class="board_list_wrap">
-                    <div class="board_list">
-                        
-                        <!-- 칼럼 -->
-                        <div class="top">
-                            <div class="num">번호</div>
-                            <div class="title">제목</div>
-                            <div class="writer">아이디</div>
-                            <div class="date">입력날짜</div>
-                            <div class="ctn1">삭제</div>
-                        </div>
-                        <!-- 칼럼끝 -->
-                        
-                        
-                        
-                        
-                        <!-- 게시글 반복문 시작 -->
-                        <div>
-                            <!-- 글번호 -->
-                            <div class="num">3</div>
-                            <!--  글제목 클릭시 내용을 볼수있습니다. -->
-                            <!-- 글링크 들어가야합니다 -->
-                            <div class="title"><a href="community_view.html">ㅋㅋㅋㅋㅋㅋㅋ</a></div>
-                            <!-- 이름 -->
-                            <div class="writer">문성주</div>
-                            <!-- 작성일 -->
-                            <div class="date">2021.12.24</div>
-                            <!-- 조화수 -->
-                            <div class="ctn1">
-                                <button>삭제</button>
-                            </div>
-                        </div>
-                        <!-- 게시글 반복문 끝 -->
-
-
-
-
-                        <div>
-                            <!-- 글번호 -->
-                            <div class="num">3</div>
-                            <!--  글제목 클릭시 내용을 볼수있습니다. -->
-                            <!-- 글링크 들어가야합니다 -->
-                            <div class="title"><a href="community_view.html">ㅋㅋㅋㅋㅋㅋㅋ</a></div>
-                            <!-- 이름 -->
-                            <div class="writer">문성주</div>
-                            <!-- 작성일 -->
-                            <div class="date">2021.12.24</div>
-                            <!-- 조화수 -->
-                            <div class="ctn1">
-                                <button>삭제</button>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <!-- 글번호 -->
-                            <div class="num">3</div>
-                            <!--  글제목 클릭시 내용을 볼수있습니다. -->
-                            <!-- 글링크 들어가야합니다 -->
-                            <div class="title"><a href="community_view.html">ㅋㅋㅋㅋㅋㅋㅋ</a></div>
-                            <!-- 이름 -->
-                            <div class="writer">문성주</div>
-                            <!-- 작성일 -->
-                            <div class="date">2021.12.24</div>
-                            <!-- 조화수 -->
-                            <div class="ctn1">
-                                <button>삭제</button>
-                            </div>
-                        </div>
-
-                        <div>
-                            <!-- 글번호 -->
-                            <div class="num">3</div>
-                            <!--  글제목 클릭시 내용을 볼수있습니다. -->
-                            <!-- 글링크 들어가야합니다 -->
-                            <div class="title"><a href="community_view.html">ㅋㅋㅋㅋㅋㅋㅋ</a></div>
-                            <!-- 이름 -->
-                            <div class="writer">문성주</div>
-                            <!-- 작성일 -->
-                            <div class="date">2021.12.24</div>
-                            <!-- 조화수 -->
-                            <div class="ctn1">
-                                <button>삭제</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- 다음페이지로 넘어갈수있는 버튼 -->
-                    <!-- 글목록 페이지 이동 -->
-                    <div class="board_page">
-                        <a href="#" class="bt first"><<</a>
-                        <a href="#" class="bt prev"><</a>
-                        <a href="#" class="num on">1</a>
-                        <a href="#" class="num">2</a>
-                        <a href="#" class="num">3</a>
-                        <a href="#" class="num">4</a>
-                        <a href="#" class="num">5</a>
-                        <a href="#" class="bt next">></a>
-                        <a href="#" class="bt last">>></a>
-                    </div>
-                    <!-- 글목록 페이지 이동 종료 -->
-                    
-                </div>
-            </div>
-
-            
+           
+        
         </div>
     </section>
     <!-- End Featured Product -->
+
+
+    <!-- Start Article -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row text-left p-2 pb-3">
+                <h4>장르?</h4>
+            </div>
+
+            <!--Start Carousel Wrapper-->
+            <div id="carousel-related-product">
+
+                <div class="p-2 pb-3">
+                    <div class="product-wap card rounded-0">
+                        <div class="card rounded-0">
+                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_08.jpg">
+                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                <ul class="list-unstyled">
+                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <a href="shop-single.html" class="h3 text-decoration-none">웹툰이름: 신의 탑</a>
+                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                            	
+                                <li>작가이름: 머머</li>
+                                <li>장르: 어떤장르</li>
+
+                                <li class="pt-2">
+                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                </li>
+                            </ul>
+                            <p class="text-center mb-0">키워드</p>
+                        </div>
+                    </div>
+                </div>
+                
+
+                
+
+
+        </div>
+    </section>
+    <!-- End Article -->
 
 
     <!-- Start Footer -->
@@ -524,6 +346,92 @@ https://templatemo.com/tm-559-zay-shop
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/templatemo.js"></script>
     <script src="assets/js/custom.js"></script>
+    <!-- End Script -->
+
+    <!-- Start Slider Script -->
+    <script src="assets/js/slick.min.js"></script>
+    <script>
+        $('#carousel-related-product').slick({
+            infinite: true,
+            arrows: false,
+            slidesToShow: 4,
+            slidesToScroll: 3,
+            dots: true,
+            responsive: [{
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                }
+            ]
+        });
+    </script>
+    <!-- End Slider Script -->
+    
+    			<script type="text/javascript">
+				function webtoonSearch() {
+					
+					$.ajax({
+						
+						url : "searchWebtoon.do", // servlet으로 보낼꺼기 때문에 뒤에 확정자를 안붙여도됨.
+						type : "get",
+
+						data : {
+							"webtoon_name" : $('input[name=webtoon_search]').val()
+						},
+						dataType : 'json', // JSON 데이터를 가져올때, jsoin으로 꼭 지정해야함.
+						success : function(res){ // 서버에 요청한 결과가 매개변수안에 담김
+							console.log(res);
+						
+							$('#websearch').html(''); // tbody의 html코드를 초기화
+							for(let i = 0; i < res.length; i++){
+							
+								// 태그 만들기
+								let table = '';
+								table += "<div class='col-12 col-md-4 mb-4'>";
+								table += "<div class='card h-100'>";
+								table += "<a href='shop-single.html'>";
+								table += "<img src='./assets/img/feature_prod_01.jpg' class='card-img-top' alt='...'>";
+								table += "</a>";								
+								table += "<a href='shop-single.html' class='h2 text-decoration-none text-dark'>"+ res[i].webtoon_name +"</a>";
+								table += "<ul class='list-unstyled d-flex justify-content-between'>";
+								table += "<li class='text-muted text-right'>"+res[i].webtoon_writer+"</li>";
+								table += "</ul>";
+								table += "<p class='card-text'>"+ res[i].webtoon_content +"</p>";
+								table += "<p class='text-muted'>"+ res[i].webtoon_genre +"</p>";
+								table += "</div>";
+								table += "</div>";
+								table += "</div>";
+
+								
+								$('#websearch').append(table);
+								
+							}
+						
+							
+						},
+						error : function() {
+							alert("요청 실패!");
+						}
+							
+					});
+				}
+				</script>
     <!-- End Script -->
 </body>
 

@@ -6,14 +6,14 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>   
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-	<head>
-		<title>Forty by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="assets/js/jquery-1.11.0.min.js"></script>
 
@@ -27,18 +27,24 @@
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-		
-	</head>
-	<style>
-	
-	</style>
-	<body style="text-align: center;">
-		<%
+    <link rel="stylesheet" href="assets/css/Sqmedia.css">
+    <link rel="stylesheet" href="assets/css/Sqstyle2.css">
+
+<!--
+    
+TemplateMo 559 Zay Shop
+
+https://templatemo.com/tm-559-zay-shop
+
+-->
+</head>
+
+<body>
+	<%
 		usersDTO dto = (usersDTO)session.getAttribute("dto");
 	
 		webtoonDTO wdto = (webtoonDTO)request.getAttribute("wdto");
 	%>
-
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
         <div class="container text-light">
@@ -154,81 +160,213 @@
         </div>
     </div>
 
-	    <section class="container py-5">
+
+    <!-- Close Header -->
+
+    <!-- Modal -->
+    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="w-100 pt-1 mb-5 text-right">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="get" class="modal-content modal-body border-0 p-0">
+                <div class="input-group mb-2">
+                    <!-- 검색창 -->
+                    <input type="text" class="form-control" id="webtoon_search" name="q" placeholder="Search ...">
+                    <button type="submit" class="input-group-text bg-success text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+    
+    <section class="container py-5">
         <div class="row text-center pt-3">
             <div class="col-lg-6 m-auto">
-                <h1 class="h1">회원관리</h1>
+                <h1 class="h1">회원정보관리</h1>
                 <p>
-                    Member Management
+                    Management
                 </p>
             </div>
         </div>
         
     </section>
-    
-    	    <section class="container py-5">
-        <div class="row text-center pt-3">
-            <div class="col-lg-6  m-auto">
 
 
+    <!-- Start Featured Product -->
+    <section class="bg-light">
+        <div class="container py-5">
+            <!-- 게시판 들어가는 자리 -->
+            
+            
+            <div class="board_wrap">
+                
+                <div class="board_title">
+                    
+                    <strong>회원정보</strong>
+                    <p>회원의 개인정보와 삭제기능을 불러옵니다!</p>
+
+					<!-- 검색창 -->
+                    <div class="input-group mb-11">
+                    <input type="text" class="form-control" id="webtoon_search" name="user_Search" placeholder="아이디 입력">
+                    <button onclick="userSearch()" class="input-group-text bg-success text-light">
+                                <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                    </div>
+                </div>
+                <div class="board_list_wrap">
+                    <div class="board_list">
+                        <!-- 칼럼 -->
+                        <div class="top">
+                            <div class="date">ID</div>
+                            <div class="date">Email</div>
+                            <div class="date">Tel</div>
+                            <div class="date">Addr</div>
+                            <div class="date">Joindate</div>
+                            <div class="ctn1">삭제</div>
+                        </div>
+                        <!-- 칼럼끝 -->
+                        
+                        
 
 
-		<!-- Wrapper -->
-			<div id="wrapper">
-				<!-- Menu -->
-					<nav id="Update">	
-						<table>
-							<thead>
-								<tr>
-									<td colspan="2"> <input type="text" name="user_Search" placeholder="검색어를 입력하세요."> </td>
-									<td><button onclick="userSearch()">검색</button></td>
-								</tr>
-								<tr>
-									<td>ID</td>
-									<td>Email</td>
-									<td>Tel</td>
-									<td>Addr</td>
-									<td>Joindate</td>										
-								</tr>
-							</thead>			
-							
-							    <!-- Start Featured Product -->
-    
-					<tbody id="tbody" >
-					<%
-						usersDAO dao = new usersDAO();
-						ArrayList<usersDTO> arr = dao.selectMember();
+                    <div id="userserach">
+                        <%
+							usersDAO dao = new usersDAO();
+							ArrayList<usersDTO> arr = dao.selectMember();
 						
-						for(int i = 0; i < arr.size(); i++){
-							
-							out.print("<tr>");
-							out.print("<td>"+arr.get(i).getUser_id()+"</td>");
-							out.print("<td>"+arr.get(i).getUser_email()+"</td>");
-							out.print("<td>"+arr.get(i).getUser_tel()+"</td>");
-							out.print("<td>"+arr.get(i).getUser_addr()+"</td>");
-							out.print("<td>"+arr.get(i).getUser_joindate()+"</td>");
-							out.print("<td><a href ='DeleteCon.do?delete_email="+arr.get(i).getUser_id()+"'>삭제</a></td>"); 
-							out.print("</tr>");					//? QueryString
-							
-						}
-					%>
-					</tbody>
-						</table>
-					</nav>			
-			</div>
-		            </div>
+							for(int i = 0; i < arr.size(); i++){
+								out.print("<div class='date'>"+arr.get(i).getUser_id()+"</div>");
+								out.print("<div class='date'>"+arr.get(i).getUser_email()+"</div>");
+								out.print("<div class='date'>"+arr.get(i).getUser_tel()+"</div>");
+								out.print("<div class='date'>"+arr.get(i).getUser_addr()+"</div>");
+								out.print("<div class='date'>"+arr.get(i).getUser_joindate()+"</div>");
+								out.print("<div class='ctn1'>");
+								out.print("<button><a href ='DeleteCon.do?delete_email="+arr.get(i).getUser_id()+"'>삭제</a></button></div>");
+							}
+	                    %>
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- 게시판에 쓴글 목록 끝 -->
         </div>
-        
     </section>
-		
-		<!-- Scripts -->
-		    <!-- Start Script -->
-    		<script src="assets/js/bootstrap.bundle.min.js"></script>
-    		<script src="assets/js/custom.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <!-- End Featured Product -->
 
-			<script type="text/javascript">
 
+    <!-- Start Footer -->
+    <footer class="bg-dark" id="tempaltemo_footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">AVG28</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt fa-fw"></i>
+                            123 Consectetur at ligula 10660
+                        </li>
+                        <li>
+                            <i class="fa fa-phone fa-fw"></i>
+                            <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-envelope fa-fw"></i>
+                            <a class="text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="#">Luxury</a></li>
+                        <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
+                        <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
+                        <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
+                        <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
+                        <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
+                        <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="#">Home</a></li>
+                        <li><a class="text-decoration-none" href="#">About Us</a></li>
+                        <li><a class="text-decoration-none" href="#">Shop Locations</a></li>
+                        <li><a class="text-decoration-none" href="#">FAQs</a></li>
+                        <li><a class="text-decoration-none" href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="row text-light mb-4">
+                <div class="col-12 mb-3">
+                    <div class="w-100 my-3 border-top border-light"></div>
+                </div>
+                <div class="col-auto me-auto">
+                    <ul class="list-inline text-left footer-icons">
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i class="fab fa-twitter fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-auto">
+                    <label class="sr-only" for="subscribeEmail">Email address</label>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail" placeholder="Email address">
+                        <div class="input-group-text btn-success text-light">Subscribe</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-100 bg-black py-3">
+            <div class="container">
+                <div class="row pt-2">
+                    <div class="col-12">
+                        <p class="text-left text-light">
+                            Copyright &copy; 2021 Company Name 
+                            | Designed by <a rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+    <!-- End Footer -->
+
+    <!-- Start Script -->
+    <script src="assets/js/jquery-1.11.0.min.js"></script>
+    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/templatemo.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <!-- End Script -->
+    
+    <script type="text/javascript">
 				function userSearch() {
 					
 					$.ajax({
@@ -243,20 +381,18 @@
 						success : function(res){ // 서버에 요청한 결과가 매개변수안에 담김
 							console.log(res);
 						
-							$('#tbody').html(''); // tbody의 html코드를 초기화
+							$('#userserach').html(''); // tbody의 html코드를 초기화
 							for(let i = 0; i < res.length; i++){
 							
 								// 태그 만들기
 								let table = '';
-								table += '<tr>';
-								table += '<td>' + res[i].user_id + '</td>';
-								table += '<td>' + res[i].user_email + '</td>';
-								table += '<td>' + res[i].user_tel + '</td>';
-								table += '<td>' + res[i].user_addr + '</td>'; 
-								table += '<td>' + res[i].user_joindate + '</td>';
-								table += "<td><a href ='DeleteCon.do?delete_email="+res[i].user_id+"'>삭제</a></td>";								
-								table += '</tr>';						
-								$('#tbody').append(table);
+								table += "<div class='date'>" + res[i].user_id + "</div>";
+								table += "<div class='date'>" + res[i].user_email + "</div>";
+								table += "<div class='date'>" + res[i].user_tel + "</div>";
+								table += "<div class='date'>" + res[i].user_addr + "</div>"; 
+								table += "<div class='date'>" + res[i].user_joindate + "</div>";
+								table += "<button><a href ='DeleteCon.do?delete_email="+res[i].user_id+"'>삭제</a></button></div>";								
+								$('#userserach').append(table);
 								
 							}
 						
@@ -269,7 +405,7 @@
 					});
 				}
 				</script>
-			
-	</body>
-</html>
+    
+</body>
 
+</html>

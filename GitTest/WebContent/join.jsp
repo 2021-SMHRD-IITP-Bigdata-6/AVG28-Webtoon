@@ -1,3 +1,4 @@
+<%@page import="com.webtoon.DTO.usersDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+
 
 	 <section class = "login-form">
     <h1>회원가입</h1>

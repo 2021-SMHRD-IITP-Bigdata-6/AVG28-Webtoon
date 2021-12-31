@@ -10,22 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.inter.Command;
-import com.usersDAO.usersDAO;
-import com.webtoon.DTO.usersDTO;
+import com.usersDAO.webtoonDAO;
+import com.webtoon.DTO.webtoonDTO;
 
-public class UserSearchService implements Command {
+public class InfoGoSearchService implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String user_id = request.getParameter("user_id");
+		String genre = request.getParameter("webtoon_genre");
 		
 		// DAO 按眉 积己
-		usersDAO dao = new usersDAO();
+		webtoonDAO dao = new webtoonDAO();
 		
 		// dao狼 皋家靛
-		ArrayList<usersDTO> list = dao.searchUser(user_id);
+		ArrayList<webtoonDTO> list = dao.selectWebtoonInfo(genre);
 		
 		// ArraryList -> json
 		Gson gson = new Gson();

@@ -7,12 +7,14 @@
 <title>Paging</title>
 <script type="text/javascript"  src="jquery-3.6.0.min.js"></script>
 </head>
- 
+
 <script type="text/javascript">
     
     var totalData = 1000;    // 총 데이터 수
     var dataPerPage = 20;    // 한 페이지에 나타낼 데이터 수
     var pageCount = 10;        // 한 화면에 나타낼 페이지 수
+    
+    
     
     function paging(totalData, dataPerPage, pageCount, currentPage){
         

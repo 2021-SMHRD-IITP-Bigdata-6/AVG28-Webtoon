@@ -1,7 +1,7 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.usersDAO.webtoonDAO"%>
 <%@page import="com.webtoon.DTO.webtoonDTO"%>
 <%@page import="com.webtoon.DTO.usersDTO"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,12 +22,14 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
 </head>
+
 <body>
 
 	<%
 		usersDTO dto = (usersDTO)session.getAttribute("dto");
 	
 		webtoonDTO wdto = (webtoonDTO)request.getAttribute("wdto");
+		
 	%>
 
     <!-- Start Top Nav -->
@@ -47,9 +49,12 @@
                     <a href = "login.jsp" class="navbar-sm-brand text-light text-decoration-none">로그인&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <!-- 회원가입으로 이동 -->
                     <a href = "join.jsp" class="navbar-sm-brand text-light text-decoration-none">회원가입</a>
-                    <%}else { %>
+                    <%}else if(dto.getUser_yesno() == "no"){ %>
                     <a href = "selection.jsp" class="navbar-sm-brand text-light text-decoration-none">찜목록&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <a href = "update.jsp" class="navbar-sm-brand text-light text-decoration-none">회원정보수정&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+                    <a href = "LogoutCon.do" class="navbar-sm-brand text-light text-decoration-none">로그아웃</a>
+                    <%}else { %>
+                    <a href = "selection.jsp" class="navbar-sm-brand text-light text-decoration-none">찜목록&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <a href = "LogoutCon.do" class="navbar-sm-brand text-light text-decoration-none">로그아웃</a>
                     <%} %>
                 </div>
@@ -92,7 +97,7 @@
                         </li>
                         <%}else {%>
                         <li class="nav-item">
-                            <a class="nav-link" href="adminMyPage.jsp">회원관리</a>
+                            <a class="nav-link" href="selectMember.jsp">회원관리</a>
                         </li>
                         <%} %>
                     </ul>
@@ -284,22 +289,23 @@
             </div>
            
            
-           
             <!-- 웹툰이미지들어갈장소 -->
-                 
+                
                 <!-- 반복문 시작 -->
                 <div id=websearch class="row">
                 <%
                 
                 	webtoonDAO wdao = new webtoonDAO();
                 	ArrayList<webtoonDTO> web_arr = wdao.selectWebtoon();
+                	//ArrayList<webtoonDTO> list = wdao.selectWebtoon();
                 	
                 	for(int i= 0; i < web_arr.size(); i++){
-                		        		
+
                 		out.print("<div class='col-12 col-md-4 mb-4'>");
                 		out.print("<div class='card h-100'>");
-                		out.print("<a href='shop-single.html'>");
-                		out.print("<img src='https://shared-comic.pstatic.net/thumb/webtoon/783054/thumbnail/thumbnail_IMAG06_4656dbaf-26ce-4aee-bde5-87a0b1714022.jpg' class='card-img-top' alt='...'>");
+                		out.print("<a href ='webtoonInfoGo.do?webtoon_se="+web_arr.get(i).getWebtoon_seq()+"&webtoon_ge="+web_arr.get(i).getWebtoon_genre()+"'>");
+                		//out.print("<a href ='webtoonInfoGo.do?webtoon_se="+web_arr.get(i).getWebtoon_seq()+",webtoon_genre="+web_arr.get(i).getWebtoon_genre()+"'>");
+                		out.print("<img src='"+ web_arr.get(i).getWebtoon_img() +"' class='card-img-top' alt='...'>");
                 		out.print("</a>");
                 		out.print("<div class='card-body'>");
                 		out.print("<a href='shop-single.html' class='h2 text-decoration-none text-dark'>"+web_arr.get(i).getWebtoon_name()+"</a>");
@@ -308,13 +314,13 @@
                 		out.print("</ul>");
                 		out.print("<p class='card-text'>"+ web_arr.get(i).getWebtoon_content() +"</p>");
                 		out.print("<p class='text-muted'>"+ web_arr.get(i).getWebtoon_genre() +"</p>");
+                		out.print("<p class='text-muted'>"+ web_arr.get(i).getWebtoon_keyword() +"</p>");
                 		out.print("</div>");
                 		out.print("</div>");
                 		out.print("</div>");
                 	}
                 	
                 %>
-
                 </div>
                 
 
@@ -451,8 +457,9 @@
 								let table = '';
 								table += "<div class='col-12 col-md-4 mb-4'>";
 								table += "<div class='card h-100'>";
-								table += "<a href='shop-single.html'>";
-								table += "<img src='./assets/img/feature_prod_01.jpg' class='card-img-top' alt='...'>";
+								table += "<a href ='webtoonInfoGo.do?webtoon_se="+res[i].webtoon_seq+"'>";
+								table += "<img src='"+res[i].webtoon_img+"' class='card-img-top' alt='...'>";
+								table += "<div class='card-body'>";							
 								table += "</a>";								
 								table += "<a href='shop-single.html' class='h2 text-decoration-none text-dark'>"+ res[i].webtoon_name +"</a>";
 								table += "<ul class='list-unstyled d-flex justify-content-between'>";
@@ -460,13 +467,15 @@
 								table += "</ul>";
 								table += "<p class='card-text'>"+ res[i].webtoon_content +"</p>";
 								table += "<p class='text-muted'>"+ res[i].webtoon_genre +"</p>";
+								table += "<p class='text-muted'>"+ res[i].webtoon_keyword +"</p>";			
 								table += "</div>";
 								table += "</div>";
 								table += "</div>";
 
+
 								
 								$('#websearch').append(table);
-								}
+								
 							}
 						
 							

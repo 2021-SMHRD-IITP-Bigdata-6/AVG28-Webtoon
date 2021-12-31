@@ -1,6 +1,6 @@
 package com.webtoon.DTO;
 
-public class community {
+public class communityDTO {
 
 	private String article_seq;
 	private String article_subject;

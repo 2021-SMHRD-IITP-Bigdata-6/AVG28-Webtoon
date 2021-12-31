@@ -39,7 +39,11 @@ https://templatemo.com/tm-559-zay-shop
 	<%
 		usersDTO dto = (usersDTO)session.getAttribute("dto");
 	
-		webtoonDTO wdto = (webtoonDTO)request.getAttribute("wdto");
+		webtoonDTO wdto1 = (webtoonDTO)session.getAttribute("wdto1");
+		ArrayList<webtoonDTO> wdto_genre = (ArrayList<webtoonDTO>)session.getAttribute("wdto_genre");
+		
+
+		
 	%>
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
@@ -106,7 +110,7 @@ https://templatemo.com/tm-559-zay-shop
                         </li>
                         <%}else {%>
                         <li class="nav-item">
-                            <a class="nav-link" href="adminMyPage.jsp">회원관리</a>
+                            <a class="nav-link" href="selectMember.jsp">회원관리</a>
                         </li>
                         <%} %>
                     </ul>
@@ -165,18 +169,19 @@ https://templatemo.com/tm-559-zay-shop
 
                     <!-- 웹툰의 이미지 사진이 들어오는 자리 -->
                     <div class="card mb-3"> 
-                        <img class="card-img img-fluid" src="assets/img/category_img_01.jpg" alt="Card image cap" id="product-detail">
+                        <img class="card-img img-fluid" src="<%=wdto1.getWebtoon_img() %>" alt="Card image cap" id="product-detail">
                     </div>
                    
                 </div>
 
 
+				
                 <!-- col end -->
                 <div class="col-lg-7 mt-5">
                     <div class="card">
                         <div class="card-body">
                             <!-- 웹툰이름 들어가는 장소 -->
-                            <h1 class="h2">장씨세가 호위무사</h1>
+                            <h1 class="h2"><%=wdto1.getWebtoon_name() %></h1>
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <h6>platform:</h6>
@@ -185,14 +190,12 @@ https://templatemo.com/tm-559-zay-shop
                                     <p class="text-muted"><strong>Naver</strong></p>
                                 </li>
                             </ul>
-                            <p class="h3 py-2">조형근 / 김인호</p>
+                            <p class="h3 py-2"><%=wdto1.getWebtoon_writer() %></p>
                             
 
                             <h6>content:</h6>
                             <p> 
-                                ‘당신이 부른 것이오. 나란 사람을... ’
-                                은둔고수 광휘. 호위무사 되다.
-                                웹소설 원작 웰메이드 무협 시대극! 
+                                <%=wdto1.getWebtoon_content() %>
                             </p>
                             <ul class="list-inline">
                                 <li class="list-inline-item">
@@ -200,7 +203,7 @@ https://templatemo.com/tm-559-zay-shop
                                 </li>
                                 <li class="list-inline-item">
                                     <!-- 장르가 들어갈 자리 -->
-                                    <p class="text-muted"><strong>액션 / 로멘스</strong></p>
+                                    <p class="text-muted"><strong><%=wdto1.getWebtoon_genre() %></strong></p>
                                 </li>
                             </ul>
 
@@ -210,15 +213,8 @@ https://templatemo.com/tm-559-zay-shop
                                 </li>
                                 <li class="list-inline-item">
                                     <!-- 키워드---->
-                                    <p class="text-muted"><strong>keyword</strong></p>
+                                    <p class="text-muted"><strong><%=wdto1.getWebtoon_keyword() %></strong></p>
                                 </li>
-                            </ul>
-
-                            <ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <h6><a href="#">웹툰보러가기</a></h6>
-                                </li>
-                                
                             </ul>
 
                             <h6>Specification:</h6>
@@ -232,18 +228,16 @@ https://templatemo.com/tm-559-zay-shop
                                 <li>Excepteur sint</li>
                             </ul>
 
-                            <form action="" method="GET">
                                 <input type="hidden" name="product-title" value="Activewear">
                                
                                 <div class="row pb-3">
                                     <div class="col d-grid">
-                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">찜하기</button>
+                                        <input type="button" onclick="location.href='<%=wdto1.getWebtoon_link()%>';" value="찜하기" class="btn btn-success btn-lg" />
                                     </div>
                                     <div class="col d-grid">
-                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard"><a href="main.html">메인화면으로</a></button>
+                                        <input type="button" onclick="location.href='<%=wdto1.getWebtoon_link()%>';" value="웹툰보러가기" class="btn btn-success btn-lg" />
                                     </div>
                                 </div>
-                            </form>
 
                         </div>
                     </div>
@@ -262,26 +256,52 @@ https://templatemo.com/tm-559-zay-shop
 
 			<section class="bg-light">
         <div class="container py-5">
-            <div class="row text-center py-3">
-                <div class="col-lg-6 m-auto">
-                    <h1 class="h1">Webtoon_search</h1>
-                    <div class="input-group mb-1">
-                        <!-- 웹툰 검색기능 -->
-                        <input type="text" class="form-control" id="webtoon_searchid" name="webtoon_search" placeholder="Search ...">
-                        <button onclick="webtoonSearch()" type="submit" class="input-group-text bg-success text-light">
-                            <i class="fa fa-fw fa-search text-white"></i>
-                        </button>
-                        <!-- 검색기능끝 -->
-                    </div>
-                </div>
-            </div>
+
 
             <!--Start Carousel Wrapper-->
             <div id="carousel-related-product">
             
             	
+			<%
+            	for(int i = 0; i < wdto_genre.size(); i++){
+            		// 장르에 따른 값 잘나왔는지 확인
+            		System.out.println(wdto_genre.get(i).getWebtoon_name());
+            		
+            		out.print("<div class='p-2 pb-3'>");
+            		out.print("<div class='product-wap card rounded-0'>");
+            		out.print("<div class='card rounded-0'>");
+            		out.print("<img class='card-img rounded-0 img-fluid' src='"+ wdto_genre.get(i).getWebtoon_img() +"'>");
+            		out.print("<div class='card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center'>");
+            		out.print("<ul class='list-unstyled'>");
+            		out.print("<li><a class='btn btn-success text-white' href='shop-single.html'><i class='far fa-heart'></i></a></li");
+            		out.print("</ul>");
+            		out.print("</div>");
+            		out.print("</div>");
+            		out.print("<div class='card-body'>");
+            		out.print("<a href='"+ wdto_genre.get(i).getWebtoon_link() +"' class='h3 text-decoration-none'>"+ wdto_genre.get(i).getWebtoon_name() +"</a>");
+            		//out.print("<a href ='webtoonInfoGo.do?webtoon_se="+wdto_genre.get(i).getWebtoon_seq()+"&webtoon_ge="+wdto_genre.get(i).getWebtoon_genre()+"' class='h3 text-decoration-none'>"+ wdto_genre.get(i).getWebtoon_name() +"</a>");
+            		out.print("<p>웹툰작가: "+ wdto_genre.get(i).getWebtoon_writer() +"</p>");
+            		out.print("<p>웹툰장르: "+ wdto_genre.get(i).getWebtoon_genre() +"</p>");
+            		out.print("<ul class='w-100 list-unstyled d-flex justify-content-between mb-0'>");
+            		out.print("<li>키워드:</li>");
+            		out.print("<li class='pt-2'>");
+            		out.print("<span class='product-color-dot color-dot-red float-left rounded-circle ml-1'></span>");
+            		out.print("<span class='product-color-dot color-dot-blue float-left rounded-circle ml-1'></span>");
+            		out.print("<span class='product-color-dot color-dot-black float-left rounded-circle ml-1'></span>");
+            		out.print("<span class='product-color-dot color-dot-light float-left rounded-circle ml-1'></span>");
+            		out.print("<span class='product-color-dot color-dot-green float-left rounded-circle ml-1'></span>");
+            		out.print("</li>");
+            		out.print("</ul>");
+            		out.print("</div>");
+            		out.print("</div>");
+            		out.print("</div>");
+            		
+            	}
+            	
             
+            %>
 
+			<!--  
                 <div class="p-2 pb-3">
                     <div class="product-wap card rounded-0">
                         <div class="card rounded-0">
@@ -289,15 +309,16 @@ https://templatemo.com/tm-559-zay-shop
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
                                     <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="card-body">
                             <a href="shop-single.html" class="h3 text-decoration-none">Red Clothing</a>
+                            <p>웹툰작가:</p>
+                            <p>웹툰장르:</p>
                             <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
+                                <li>키워드:</li>
+                                <li>아무거나1, ㅋㅋ</li>
                                 <li class="pt-2">
                                     <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
                                     <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
@@ -306,221 +327,13 @@ https://templatemo.com/tm-559-zay-shop
                                     <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
                                 </li>
                             </ul>
-                            
-                            <p class="text-center mb-0">$20.00</p>
                         </div>
                     </div>
                 </div>
-
-				<div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_08.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Red Clothing</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            
-                            <p class="text-center mb-0">$20.00</p>
-                        </div>
-                    </div>
-                </div>
+			-->
+				
 	
-				<div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_08.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Red Clothing</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            
-                            <p class="text-center mb-0">$20.00</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_08.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Red Clothing</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            
-                            <p class="text-center mb-0">$20.00</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_08.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Red Clothing</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            
-                            <p class="text-center mb-0">$20.00</p>
-                        </div>
-                    </div>
-                </div>
-
-				<div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_08.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Red Clothing</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            
-                            <p class="text-center mb-0">$20.00</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_08.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Red Clothing</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            
-                            <p class="text-center mb-0">$20.00</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_08.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Red Clothing</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                            
-                            <p class="text-center mb-0">$20.00</p>
-                        </div>
-                    </div>
-                </div>
+				
 
 				</div>
                 </div>
