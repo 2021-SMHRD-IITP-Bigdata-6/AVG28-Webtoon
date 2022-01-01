@@ -303,7 +303,7 @@
 
                 		out.print("<div class='col-12 col-md-4 mb-4'>");
                 		out.print("<div class='card h-100'>");
-                		out.print("<a href ='webtoonInfoGo.do?webtoon_se="+web_arr.get(i).getWebtoon_seq()+"&webtoon_ge="+web_arr.get(i).getWebtoon_genre()+"'>");
+                		out.print("<a href ='webtoonInfoGo.do?webtoon_se="+web_arr.get(i).getWebtoon_seq()+"&webtoon_ge="+web_arr.get(i).getWebtoon_genre()+"' >");
                 		//out.print("<a href ='webtoonInfoGo.do?webtoon_se="+web_arr.get(i).getWebtoon_seq()+",webtoon_genre="+web_arr.get(i).getWebtoon_genre()+"'>");
                 		out.print("<img src='"+ web_arr.get(i).getWebtoon_img() +"' class='card-img-top' alt='...'>");
                 		out.print("</a>");
