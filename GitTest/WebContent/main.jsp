@@ -457,7 +457,7 @@
 								let table = '';
 								table += "<div class='col-12 col-md-4 mb-4'>";
 								table += "<div class='card h-100'>";
-								table += "<a href ='webtoonInfoGo.do?webtoon_se="+res[i].webtoon_seq+"'>";
+								table += "<a href ='webtoonInfoGo.do?webtoon_se="+res[i].webtoon_seq+"&webtoon_ge="+res[i].webtoon_genre+"' >";
 								table += "<img src='"+res[i].webtoon_img+"' class='card-img-top' alt='...'>";
 								table += "<div class='card-body'>";							
 								table += "</a>";								
