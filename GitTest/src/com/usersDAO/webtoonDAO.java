@@ -8,7 +8,10 @@ import java.util.ArrayList;
 
 import com.webtoon.DTO.usersDTO;
 import com.webtoon.DTO.webtoonDTO;
-
+/**
+ * @author mandu
+ *
+ */
 public class webtoonDAO {
 
 	Connection conn = null;
@@ -97,7 +100,15 @@ public class webtoonDAO {
 
 				wdto = new webtoonDTO(webtoon_seq, webtoon_name, webtoon_writer, webtoon_content, webtoon_genre,
 						webtoon_img, webtoon_link, webtoon_keyword);
-
+				
+				System.out.println("infodao실행값" + webtoon_seq);
+				System.out.println("infodao실행값" + webtoon_name);
+				System.out.println("infodao실행값" + webtoon_writer);
+				System.out.println("infodao실행값" + webtoon_content);
+				System.out.println("infodao실행값" + webtoon_genre);
+				System.out.println("infodao실행값" + webtoon_img);
+				System.out.println("infodao실행값" + webtoon_link);
+				System.out.println("infodao실행값" + webtoon_keyword);
 			}
 
 		} catch (Exception e) {
@@ -130,6 +141,7 @@ public class webtoonDAO {
 
 			while (rs.next()) {
 
+				String webtoon_seq = rs.getString(1);
 				String webtoon_name = rs.getString(2);
 				String webtoon_writer = rs.getString(3);
 				String webtoon_content = rs.getString(4);
@@ -138,10 +150,19 @@ public class webtoonDAO {
 				String webtoon_link = rs.getString(7);
 				String webtoon_keyword = rs.getString(8);
 
-				wdto = new webtoonDTO(webtoon_name, webtoon_writer, webtoon_content, webtoon_genre, webtoon_img,
+				wdto = new webtoonDTO(webtoon_seq, webtoon_name, webtoon_writer, webtoon_content, webtoon_genre, webtoon_img,
 						webtoon_link, webtoon_keyword);
 				web_arr.add(wdto);
-				System.out.println("dao실행값" + wdto_genre);
+				
+				System.out.println("슬라이드dao실행값" + webtoon_seq);
+				System.out.println("슬라이드dao실행값" + wdto_genre);
+				System.out.println("슬라이드dao실행값" + webtoon_name);
+				System.out.println("슬라이드dao실행값" + webtoon_writer);
+				System.out.println("슬라이드dao실행값" + webtoon_content);
+				System.out.println("슬라이드dao실행값" + webtoon_genre);
+				System.out.println("슬라이드dao실행값" + webtoon_img);
+				System.out.println("슬라이드dao실행값" + webtoon_link);
+				System.out.println("슬라이드dao실행값" + webtoon_keyword);
 			}
 
 		} catch (Exception e) {
@@ -155,9 +176,84 @@ public class webtoonDAO {
 		}
 		return web_arr;
 
+	}
+
+	// 총 레코드 수를 구함..
+	public int getWebtoonCount() {
+		int count = 0;
+
+		try {
+			getConn();
+
+			String sql = "select COUNT(*) from t_webtoon";
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally { // 코드가 오류가됬던 안됬던 무조건 실행
+
+			close();
+
+		}
+
+		return count;
+	}
+	
+	//webToon 테이블 getList
+	public ArrayList<webtoonDTO> getSelectWebtoonList(int startRow, int endRow) {
+
+		ArrayList<webtoonDTO> web_arr = new ArrayList<webtoonDTO>();
+
+		try { // db연결코드
+
+			getConn();
+
+			// 5 .SQL명령문을 준비 //콘솔창에입력 ? 써야한다
+//			String sql = "select *from t_webtoon where ";
+			String sql = " SELECT * FROM ( "
+				    + "SELECT webtoon_seq, webtoon_name, webtoon_writer,  webtoon_content, webtoon_genre, webtoon_img,webtoon_link, webtoon_keyword,rownum rn FROM t_webtoon"
+				    + " ORDER BY webtoon_seq DESC ) WHERE rn between ? and ? "; 
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, startRow);
+			psmt.setInt(2, endRow);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				String webtoon_seq = rs.getString(1);
+				String webtoon_name = rs.getString(2);
+				String webtoon_writer = rs.getString(3);
+				String webtoon_content = rs.getString(4);
+				String webtoon_genre = rs.getString(5);
+				String webtoon_img = rs.getString(6);
+				String webtoon_link = rs.getString(7);
+				String webtoon_keyword = rs.getString(8);
+
+				wdto = new webtoonDTO(webtoon_seq, webtoon_name, webtoon_writer, webtoon_content, webtoon_genre,
+						webtoon_img, webtoon_link, webtoon_keyword);
+				web_arr.add(wdto);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println("클래스파일 로딩 실패");
+			e.printStackTrace();// try 문 안에서 오류확인하는 코드
+
+		} finally { // 코드가 오류가됬던 안됬던 무조건 실행
+
+			close();
+
+		}
+
+		return web_arr;
 
 	}
 
+	
 	public ArrayList<webtoonDTO> selectWebtoon() {
 
 		ArrayList<webtoonDTO> web_arr = new ArrayList<webtoonDTO>();
@@ -167,8 +263,7 @@ public class webtoonDAO {
 			getConn();
 
 			// 5 .SQL명령문을 준비 //콘솔창에입력 ? 써야한다
-			String sql = "select * from t_webtoon";
-
+			String sql = "select * from t_webtoon ";
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 
@@ -203,6 +298,7 @@ public class webtoonDAO {
 
 	}
 
+
 	public ArrayList<webtoonDTO> searchWebtoon(String webtoon_name) {
 		System.out.println(webtoon_name);
 		ArrayList<webtoonDTO> web_arr = new ArrayList<webtoonDTO>();
@@ -219,18 +315,27 @@ public class webtoonDAO {
 
 			while (rs.next()) {
 
-				String mwebtoon_name = rs.getString(2);
+//				String mwebtoon_name = rs.getString(2);
+//				String webtoon_writer = rs.getString(3);
+//				String webtoon_content = rs.getString(4);
+//				String webtoon_genre = rs.getString(5);
+//				String webtoon_img = rs.getString(6);
+//				String webtoon_link = rs.getString(7);
+//				String webtoon_keyword = rs.getString(8);
+				
+				String webtoon_seq = rs.getString(1);
+				webtoon_name = rs.getString(2);
 				String webtoon_writer = rs.getString(3);
 				String webtoon_content = rs.getString(4);
 				String webtoon_genre = rs.getString(5);
 				String webtoon_img = rs.getString(6);
 				String webtoon_link = rs.getString(7);
 				String webtoon_keyword = rs.getString(8);
-
-				wdto = new webtoonDTO(mwebtoon_name, webtoon_writer, webtoon_content, webtoon_genre, webtoon_img,
-						webtoon_link, webtoon_keyword);
+				wdto = new webtoonDTO(webtoon_seq, webtoon_name, webtoon_writer, webtoon_content, webtoon_genre,
+						webtoon_img, webtoon_link, webtoon_keyword);
+//				wdto = new webtoonDTO(mwebtoon_name, webtoon_writer, webtoon_content, webtoon_genre, webtoon_img,
+//						webtoon_link, webtoon_keyword);
 				web_arr.add(wdto);
-				System.out.println(mwebtoon_name);
 			}
 
 		} catch (Exception e) {

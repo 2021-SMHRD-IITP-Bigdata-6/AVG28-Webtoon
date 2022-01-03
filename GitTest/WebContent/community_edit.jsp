@@ -1,12 +1,20 @@
-<%@page import="com.webtoon.DTO.webtoonDTO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.usersDAO.NoticeDAO"%>
+<%@page import="com.webtoon.DTO.NoticeDTO"%>
 <%@page import="com.webtoon.DTO.usersDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String articleSeq = request.getParameter("articleSeq");
+NoticeDAO noticeDAO = new NoticeDAO();
+NoticeDTO noticeDTO = noticeDAO.getNoticeData(articleSeq);
+
+%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <title>수정하기</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -23,7 +31,6 @@
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
     <link rel="stylesheet" href="assets/css/Sqmedia.css">
     <link rel="stylesheet" href="assets/css/Sqstyle.css">
-    <title>Insert title here</title>
 <!--
     
 TemplateMo 559 Zay Shop
@@ -37,7 +44,6 @@ https://templatemo.com/tm-559-zay-shop
 	<%
 		usersDTO dto = (usersDTO)session.getAttribute("dto");
 	
-		webtoonDTO wdto = (webtoonDTO)request.getAttribute("wdto");
 	%>
 
     <!-- Start Top Nav -->
@@ -182,39 +188,40 @@ https://templatemo.com/tm-559-zay-shop
         <div class="container py-5">
             <!-- 게시판 들어가는 자리 -->
             <div class="board_wrap">
-                <div class="board_title">
-                    <strong>수정페이지</strong>
-                    <p>글의 내용을 수정합니다.</p>
-                </div>
-                <div class="board_write_wrap">
-                    <div class="board_write">
-                        <div class="title">
-                            <dl>
-                                <dt>제목</dt>
-                                <dd><input type="text" placeholder="제목 입력" value="글 제목이 들어갑니다"></dd>
-                            </dl>
-                        </div>
-                        <div class="info">
-                            <dl>
-                                <dt>글쓴이</dt>
-                                <dd>ID값 들어갈자리</dd>
-                            </dl>
-                            <dl>
-                                <dt>비밀번호</dt>
-                                <dd><input type="password" placeholder="비밀번호 입력" value="1234"></dd>
-                            </dl>
-                        </div>
-                        <div class="cont">
-                            <textarea placeholder="내용 입력"><!-- 내용들어가는 자리 -->
-                       
-        </textarea>
-                        </div>
-                    </div>
-                    <div class="bt_wrap">
-                        <button type="button" name="edit1"><a href="community_list.jsp" class="on">수정</a></button>
-                        <a href="community_list.jsp">취소</a>
-                    </div>
-                </div>
+	            <form method ="post" action="community_edit_action.jsp?articleSeq=<%= articleSeq %>">
+	                <div class="board_title">
+	                    <strong>수정페이지</strong>
+	                    <p>글의 내용을 수정합니다.</p>
+	                </div>
+	                <div class="board_write_wrap">
+	                    <div class="board_write">
+	                        <div class="title">
+	                            <dl>
+	                                <dt>제목</dt>
+	                                <dd><input type="text" placeholder="제목 입력" id="article_subject"  name="article_subject" value="<%= noticeDTO.getArticle_subject()%>"></dd>
+	                            </dl>
+	                        </div>
+	                        <div class="info">
+	                            <dl>
+	                                <dt>글쓴이</dt>
+	                                <dd id="user_id" name="user_id"><%= noticeDTO.getUser_id() %></dd>
+	                            </dl>
+	<!--                             <dl> -->
+	<!--                                 <dt>비밀번호</dt> -->
+	<!--                                 <dd><input type="password" placeholder="비밀번호 입력" value="1234"></dd> -->
+	<!--                             </dl> -->
+	                        </div>
+	                        <div class="cont">
+	                            <textarea placeholder="내용 입력" id="article_content" name="article_content"><%= noticeDTO.getArticle_content() %></textarea>
+	                        </div>
+	                    </div>
+	                    <div class="bt_wrap">
+	                        <button type="submit" class="on" name="edit1"><a>저장</a></button>
+	                        <a href="community_list.jsp">취소</a>
+	                    </div>
+	                   
+	                </div>
+	            </form>
             </div>
 
 

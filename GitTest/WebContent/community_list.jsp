@@ -1,12 +1,45 @@
-<%@page import="com.webtoon.DTO.webtoonDTO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.usersDAO.NoticeDAO"%>
+<%@page import="com.webtoon.DTO.NoticeDTO"%>
 <%@page import="com.webtoon.DTO.usersDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+int pageSize = 10;	//한 페이지에 출력할 레코드 수
+
+/* 페이지 링크를 클릭한 번호 / 현재 페이지  */
+String pageNum = request.getParameter("pageNum");
+
+/* 클릭한게 없으면 1번 페이지  */
+if(pageNum == null){
+	pageNum = "1";
+}
+
+/* 연산을 하기 위한 pageNum 형변환 / 현재페이지  */
+int currentPage = Integer.parseInt(pageNum);
+
+/* 해당 페이지에서 시작할 레코드 / 마지막 레코드  */
+int startRow = (currentPage -1) * pageSize + 1;
+int endRow = currentPage * pageSize;
+
+int count = 0;
+NoticeDAO noticeDAO = new NoticeDAO();
+/* 데이터베이스에 저장된 총 갯수  */
+count = noticeDAO.getNoticeCount();
+
+ArrayList<NoticeDTO> list = null;
+
+if(count > 0){
+	/* getList() 메소드 호춣 / 해당 레코드 반환  */
+	list = noticeDAO.getNoticeList(startRow, endRow);
+}
+
+%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <title>게시판</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -22,7 +55,6 @@
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
     <link rel="stylesheet" href="assets/css/Sqmedia.css">
     <link rel="stylesheet" href="assets/css/Sqstyle.css">
-    <title>Insert title here</title>
 <!--
     
 TemplateMo 559 Zay Shop
@@ -37,7 +69,7 @@ https://templatemo.com/tm-559-zay-shop
 	<%
 		usersDTO dto = (usersDTO)session.getAttribute("dto");
 	
-		webtoonDTO wdto = (webtoonDTO)request.getAttribute("wdto");
+// 		webtoonDTO wdto = (webtoonDTO)request.getAttribute("wdto");
 	%>
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
@@ -179,89 +211,80 @@ https://templatemo.com/tm-559-zay-shop
                             <div class="ctn1">조회</div>
                         </div>
                         <!-- 칼럼끝 -->
-                        
-                        
-                        
-                        
+                        <%
+                        	if(count > 0){
+                        		int number = count - (currentPage - 1) * pageSize;
+                        		for(int i=0; i<list.size(); i++){
+                        %>
                         <!-- 게시글 반복문 시작 -->
                         <div>
                             <!-- 글번호 -->
-                            <div class="num">4</div>
+                            <div class="num"><%= list.get(i).getArticle_seq()%></div>
                             <!--  글제목 클릭시 내용을 볼수있습니다. -->
                             <!-- 글링크 들어가야합니다 -->
-                            <div class="title"><a href="community_view.jsp">글 제목이 들어갑니다.</a></div>
+                            <div class="title"><a href="community_view.jsp?articleSeq=<%=list.get(i).getArticle_seq()%>"><%= list.get(i).getArticle_subject() %></a></div>
                             <!-- 이름 -->
-                            <div class="writer">문성주</div>
+                            <div class="writer"><%= list.get(i).getUser_id() %></div>
                             <!-- 작성일 -->
-                            <div class="date">2021.12.24</div>
+                            <div class="date"><%= list.get(i).getArticle_date() %></div>
                             <!-- 조화수 -->
-                            <div class="ctn1">33</div>
+                            <div class="ctn1"><%= list.get(i).getArticle_cnt() %></div>
                         </div>
                         <!-- 게시글 반복문 끝 -->
-
-
-
+						<%
+                        		}
+                        	}else{
+                        %>
                         <div>
-                            <!-- 글번호 -->
-                            <div class="num">3</div>
-                            <!--  글제목 클릭시 내용을 볼수있습니다. -->
-                            <!-- 글링크 들어가야합니다 -->
-                            <div class="title"><a href="community_view.jsp">글 제목이 들어갑니다.</a></div>
-                            <!-- 이름 -->
-                            <div class="writer">문성주</div>
-                            <!-- 작성일 -->
-                            <div class="date">2021.12.24</div>
-                            <!-- 조화수 -->
-                            <div class="ctn1">33</div>
+                            <div class="noData">데이터가 존재하지 않습니다.</div>
                         </div>
-                        
-                        <div>
-                            <!-- 글번호 -->
-                            <div class="num">2</div>
-                            <!--  글제목 클릭시 내용을 볼수있습니다. -->
-                            <!-- 글링크 들어가야합니다 -->
-                            <div class="title"><a href="community_view.jsp">글 제목이 들어갑니다.</a></div>
-                            <!-- 이름 -->
-                            <div class="writer">문성주</div>
-                            <!-- 작성일 -->
-                            <div class="date">2021.12.24</div>
-                            <!-- 조화수 -->
-                            <div class="ctn1">33</div>
-                        </div>
-
-                        <div>
-                            <!-- 글번호 -->
-                            <div class="num">1</div>
-                            <!--  글제목 클릭시 내용을 볼수있습니다. -->
-                            <!-- 글링크 들어가야합니다 -->
-                            <div class="title"><a href="community_view.jsp">글 제목이 들어갑니다.</a></div>
-                            <!-- 이름 -->
-                            <div class="writer">문성주</div>
-                            <!-- 작성일 -->
-                            <div class="date">2021.12.24</div>
-                            <!-- 조화수 -->
-                            <div class="ctn1">33</div>
-                        </div>
+                        <%
+                        	}
+                        %>
                     </div>
                     
                     <!-- 다음페이지로 넘어갈수있는 버튼 -->
                     <!-- 글목록 페이지 이동 -->
                     <div class="board_page">
-                        <a href="#" class="bt first"><<</a>
-                        <a href="#" class="bt prev"><</a>
-                        <a href="#" class="num on">1</a>
-                        <a href="#" class="num">2</a>
-                        <a href="#" class="num">3</a>
-                        <a href="#" class="num">4</a>
-                        <a href="#" class="num">5</a>
-                        <a href="#" class="bt next">></a>
-                        <a href="#" class="bt last">>></a>
+<!--                         <a href="#" class="bt first"><<</a> -->
+					<%
+					if(count > 0){
+        				int pageCount = count / pageSize + (count%pageSize == 0 ? 0 : 1);
+        				int pageBlock = 10;
+        				int startPage = ((currentPage-1)/pageBlock)	*	pageBlock+1;
+        				int endPage = startPage	+	pageBlock-1;
+        				
+        				if(endPage > pageCount){
+        					endPage = pageCount;
+        				}
+        				
+        				if(startPage > pageBlock){
+					%>
+                        <a href="community_list.jsp?pageNum=<%=startPage - 10%>" class="bt prev"><</a>
+                    <%
+        				}
+        				for(int i = startPage; i <= endPage; i++){
+        					/* 핸재 페이지에는 링크를 설정하지 않음  */
+        					if(i == currentPage){
+                    %>
+                    	 <a href="#" class="num on"><%= i %></a>
+                    <%
+        					}else{
+        						
+                    %>
+                    	 <a href="community_list.jsp?pageNum=<%=i%>" class="num"><%= i %></a>
+                    <%
+        					}
+        				}
+        				if(endPage < pageCount){
+                    %>
+                        <a href="community_list.jsp?pageNum=<%=startPage + 10%>" class="bt next">></a>
+					<%
+        				}
+					}
+					%>
                     </div>
                     <!-- 글목록 페이지 이동 종료 -->
-
-
-
-
                     
                     <div class="bt_wrap">
                         <!-- 이건 수정안해도됨 -->

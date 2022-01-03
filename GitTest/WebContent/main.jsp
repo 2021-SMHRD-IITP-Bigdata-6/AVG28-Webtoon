@@ -1,9 +1,42 @@
+<%@page import="com.webtoon.DTO.mywebtoonDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.usersDAO.webtoonDAO"%>
 <%@page import="com.webtoon.DTO.webtoonDTO"%>
 <%@page import="com.webtoon.DTO.usersDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+
+int pageSize = 15;	//한 페이지에 출력할 레코드 수
+
+/* 페이지 링크를 클릭한 번호 / 현재 페이지  */
+String pageNum = request.getParameter("pageNum");
+
+/* 클릭한게 없으면 1번 페이지  */
+if(pageNum == null){
+	pageNum = "1";
+}
+
+/* 연산을 하기 위한 pageNum 형변환 / 현재페이지  */
+int currentPage = Integer.parseInt(pageNum);
+
+/* 해당 페이지에서 시작할 레코드 / 마지막 레코드  */
+int startRow = (currentPage -1) * pageSize + 1;
+int endRow = currentPage * pageSize;
+
+int count = 0;
+webtoonDAO wdao = new webtoonDAO();
+/* 데이터베이스에 저장된 총 갯수  */
+count = wdao.getWebtoonCount();
+
+ArrayList<webtoonDTO> web_arr = null;
+
+if(count > 0){
+	/* getList() 메소드 호춣 / 해당 레코드 반환  */
+	web_arr = wdao.getSelectWebtoonList(startRow,endRow);
+}
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,9 +61,10 @@
 	<%
 		usersDTO dto = (usersDTO)session.getAttribute("dto");
 	
-		webtoonDTO wdto = (webtoonDTO)request.getAttribute("wdto");
-		
+		// 찜목록 불러오기
+		ArrayList<mywebtoonDTO> mwdto1 = (ArrayList<mywebtoonDTO>)session.getAttribute("mwdto1");
 	%>
+	
 
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
@@ -50,11 +84,11 @@
                     <!-- 회원가입으로 이동 -->
                     <a href = "join.jsp" class="navbar-sm-brand text-light text-decoration-none">회원가입</a>
                     <%}else if(dto.getUser_yesno() == "no"){ %>
-                    <a href = "selection.jsp" class="navbar-sm-brand text-light text-decoration-none">찜목록&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+                    <a href = "Selection.do?user_id=<%=dto.getUser_id() %>&user_pw=<%=dto.getUser_pw() %>" class="navbar-sm-brand text-light text-decoration-none">찜목록&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <a href = "update.jsp" class="navbar-sm-brand text-light text-decoration-none">회원정보수정&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <a href = "LogoutCon.do" class="navbar-sm-brand text-light text-decoration-none">로그아웃</a>
                     <%}else { %>
-                    <a href = "selection.jsp" class="navbar-sm-brand text-light text-decoration-none">찜목록&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+                    <a href = "Selection.do?user_id=<%=dto.getUser_id() %>&user_pw=<%=dto.getUser_pw() %>" class="navbar-sm-brand text-light text-decoration-none">찜목록&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <a href = "LogoutCon.do" class="navbar-sm-brand text-light text-decoration-none">로그아웃</a>
                     <%} %>
                 </div>
@@ -269,7 +303,7 @@
     </section>
     <!-- 플랫폼 이동 구간 끝 -->
     
-   
+ 
 
     <!-- Start Featured Product -->
     <section class="bg-light">
@@ -287,48 +321,99 @@
                     </div>
                 </div>
             </div>
-           
+
            
             <!-- 웹툰이미지들어갈장소 -->
                 
                 <!-- 반복문 시작 -->
                 <div id=websearch class="row">
                 <%
-                
-                	webtoonDAO wdao = new webtoonDAO();
-                	ArrayList<webtoonDTO> web_arr = wdao.selectWebtoon();
-                	//ArrayList<webtoonDTO> list = wdao.selectWebtoon();
-                	
-                	for(int i= 0; i < web_arr.size(); i++){
-
-                		out.print("<div class='col-12 col-md-4 mb-4'>");
-                		out.print("<div class='card h-100'>");
-                		out.print("<a href ='webtoonInfoGo.do?webtoon_se="+web_arr.get(i).getWebtoon_seq()+"&webtoon_ge="+web_arr.get(i).getWebtoon_genre()+"' >");
-                		//out.print("<a href ='webtoonInfoGo.do?webtoon_se="+web_arr.get(i).getWebtoon_seq()+",webtoon_genre="+web_arr.get(i).getWebtoon_genre()+"'>");
-                		out.print("<img src='"+ web_arr.get(i).getWebtoon_img() +"' class='card-img-top' alt='...'>");
-                		out.print("</a>");
-                		out.print("<div class='card-body'>");
-                		out.print("<a href='shop-single.html' class='h2 text-decoration-none text-dark'>"+web_arr.get(i).getWebtoon_name()+"</a>");
-                		out.print("<ul class='list-unstyled d-flex justify-content-between'>");
-                		out.print("<li class='text-muted text-right'>"+web_arr.get(i).getWebtoon_writer()+"</li>");
-                		out.print("</ul>");
-                		out.print("<p class='card-text'>"+ web_arr.get(i).getWebtoon_content() +"</p>");
-                		out.print("<p class='text-muted'>"+ web_arr.get(i).getWebtoon_genre() +"</p>");
-                		out.print("<p class='text-muted'>"+ web_arr.get(i).getWebtoon_keyword() +"</p>");
-                		out.print("</div>");
-                		out.print("</div>");
-                		out.print("</div>");
-                	}
-                	
+					if(count > 0){
+						int number = count - (currentPage -1) * pageSize;
+						for(int i=0;i<web_arr.size();i++){
+                %>
+ 					<div class="col-12 col-md-4 mb-4">
+ 						<div class="card h-100">
+ 							<a href="webtoonInfoGo.do?webtoon_se=<%=web_arr.get(i).getWebtoon_seq()%>&webtoon_ge=<%=web_arr.get(i).getWebtoon_genre()%>&webtoon_i=<%=dto.getUser_id()%>"><img src="<%=web_arr.get(i).getWebtoon_img()%>" class="card-img-top" alt="..."></a>
+ 							<div class="card-body">
+ 								<a href="shop-single.html" class="h2 text-decoration-none text-dark"><%= web_arr.get(i).getWebtoon_name() %></a>
+ 								<ul class="list-unstyled d-flex justify-content-between">
+									<li class="text-muted text-right"><%= web_arr.get(i).getWebtoon_writer() %></li>
+								</ul>
+ 								<p class="card-text"><%= web_arr.get(i).getWebtoon_content() %></p>
+								<p class="text-muted"><%= web_arr.get(i).getWebtoon_genre() %></p>
+								<p class="text-muted"><%= web_arr.get(i).getWebtoon_keyword() %></p>
+ 							</div>
+ 						</div>
+ 					</div>               
+                <%
+							
+						}
+					}else{
+						
+                %>
+                	<div class="col-12 col-md-4 mb-4">
+ 						<div class="card h-100">
+ 							<p class="card-text">데이터가 존재하지 않습니다.</p>
+ 						</div>
+ 					</div>     
+                <%
+					}
                 %>
                 </div>
-                
-
-
-
-
-        
+                <!-- 페이징이 들어갈 스타일 -->
+                <div class="list-paging-wrap">
+                	<ul class="pagination">
+                		<%
+                			/* 페이징 처리 */
+                			if(count > 0){
+                				/* 총 페이지의 수 */
+                				int pageCount = count / pageSize + (count%pageSize == 0 ? 0 : 1);
+                				/* 한 페이지에 보여줄 페이지 블럭(링크) 수  */
+                				int pageBlock = 10;
+                				/* 한 페이지에 보여줄 시작 및 끝 번호 (예 : 1, 2, 3 ~ 10 / 11, 12, 13 ~ 20)*/
+                				int startPage = ((currentPage-1)/pageBlock)	*	pageBlock+1;
+                				int endPage = startPage	+	pageBlock-1;
+                				
+                				/* 마지막 페이지가 총 페이지 수 보다 크면 endPage를 pageCounr로 할당  */
+                				if(endPage > pageCount){
+                					endPage = pageCount;
+                				}
+                					
+                				/* 페이지 블럭스보다 startPage가 클경우 이전 링크 생성  */
+                				if(startPage > pageBlock){
+                		%>
+									<li class="page-item"><a href="main.jsp?pageNum=<%=startPage - 10%>" class="page-link">이전</a></li>
+						<%
+                				}
+                				/* 페이지 블록 번호  */
+                				for(int i = startPage; i <= endPage; i++){
+                					/* 핸재 페이지에는 링크를 설정하지 않음  */
+                					if(i == currentPage){
+						%>
+									<li class="page-item active"><a href="#" class="page-link" ><%= i %></a></li>
+						<%
+                					}else{
+                						/* 현재 페이지가 아닌 경우 링크 설정  */
+	                	%>
+	                				<li class="page-item"><a href="main.jsp?pageNum=<%=i%>" class="page-link" ><%= i %></a></li>
+	                	
+	                	<%
+                					}
+                				}
+                				
+                				if(endPage < pageCount){
+                					/* 현재 블록의 마지막 페이지보다 페이지 전체 블록수가 클경우 다음 링크 생성  */
+						%>
+									<li class="page-item"><a href="main.jsp?pageNum=<%=startPage + 10%>" class="page-link" >다음</a></li>
+						<%
+                				}
+							}
+						%>
+					</ul>
+                </div>
         </div>
+
     </section>
     <!-- End Featured Product -->
 
@@ -435,6 +520,7 @@
     <script src="assets/js/templatemo.js"></script>
     <script src="assets/js/custom.js"></script>
     
+    			<!-- let id = 'dto.getUser_id()' ajax는 jsp를 싹다 정리후 보내는거기때문에 let에 새로 변수를 넣어주어 세션값을 불러옴-->
     			<script type="text/javascript">
 				function webtoonSearch() {
 					
@@ -449,15 +535,16 @@
 						dataType : 'json', // JSON 데이터를 가져올때, jsoin으로 꼭 지정해야함.
 						success : function(res){ // 서버에 요청한 결과가 매개변수안에 담김
 							console.log(res);
-						
+							let id = '<%=dto.getUser_id()%>'
 							$('#websearch').html(''); // tbody의 html코드를 초기화
 							for(let i = 0; i < res.length; i++){
 							
+								
 								// 태그 만들기
 								let table = '';
 								table += "<div class='col-12 col-md-4 mb-4'>";
 								table += "<div class='card h-100'>";
-								table += "<a href ='webtoonInfoGo.do?webtoon_se="+res[i].webtoon_seq+"&webtoon_ge="+res[i].webtoon_genre+"' >";
+								table += "<a href ='webtoonInfoGo.do?webtoon_se="+res[i].webtoon_seq+"&webtoon_ge="+res[i].webtoon_genre+"&webtoon_i="+id+"'>";
 								table += "<img src='"+res[i].webtoon_img+"' class='card-img-top' alt='...'>";
 								table += "<div class='card-body'>";							
 								table += "</a>";								
@@ -487,6 +574,8 @@
 					});
 				}
 				</script>
+				
+				
     <!-- End Script -->
     
     

@@ -1,12 +1,23 @@
-<%@page import="com.webtoon.DTO.webtoonDTO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.usersDAO.NoticeDAO"%>
+<%@page import="com.webtoon.DTO.NoticeDTO"%>
 <%@page import="com.webtoon.DTO.usersDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String articleSeq = request.getParameter("articleSeq");
+NoticeDAO noticeDAO = new NoticeDAO();
+NoticeDTO noticeDTO = noticeDAO.getNoticeData(articleSeq);
+
+/* 조회수 증가  */
+noticeDAO.updateArticleCnt(articleSeq);
+
+%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <title>상세정보</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -23,7 +34,6 @@
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
     <link rel="stylesheet" href="assets/css/Sqmedia.css">
     <link rel="stylesheet" href="assets/css/Sqstyle.css">
-    <title>Insert title here</title>
 <!--
     
 TemplateMo 559 Zay Shop
@@ -38,7 +48,7 @@ https://templatemo.com/tm-559-zay-shop
 	<%
 		usersDTO dto = (usersDTO)session.getAttribute("dto");
 	
-		webtoonDTO wdto = (webtoonDTO)request.getAttribute("wdto");
+// 		webtoonDTO wdto = (webtoonDTO)request.getAttribute("wdto");
 	%>
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
@@ -170,35 +180,28 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="board_view_wrap">
                     <div class="board_view">
                         <div class="title">
-                            글 제목이 들어갑니다.
+                           <%= noticeDTO.getArticle_subject()%>
                         </div>
                         <div class="info">
                             <dl>
                                 <dt>번호</dt>
-                                <dd>1</dd>
+                                <dd><%= noticeDTO.getArticle_seq() %></dd>
                             </dl>
                             <dl>
                                 <dt>글쓴이</dt>
-                                <dd>김이름</dd>
+                                <dd><%= noticeDTO.getUser_id() %></dd>
                             </dl>
                             <dl>
                                 <dt>작성일</dt>
-                                <dd>2021.1.16</dd>
+                                <dd><%= noticeDTO.getArticle_date() %></dd>
                             </dl>
                             <dl>
                                 <dt>조회</dt>
-                                <dd>33</dd>
+                                <dd><%= noticeDTO.getArticle_cnt() %></dd>
                             </dl>
                         </div>
                         <div class="cont">
-                            글 내용이 들어갑니다<br>
-                            글 내용이 들어갑니다<br>
-                            글 내용이 들어갑니다<br>
-                            글 내용이 들어갑니다<br>
-                            글 내용이 들어갑니다<br>
-                            글 내용이 들어갑니다<br>
-                            글 내용이 들어갑니다<br>
-                            글 내용이 들어갑니다
+                            <%= noticeDTO.getArticle_content() %>
                         </div>
                     </div>
                     <div class="bt_wrap">
@@ -206,8 +209,9 @@ https://templatemo.com/tm-559-zay-shop
                         
                         <!-- 수정하는 버튼 -->
                         <button type="button" id = "goEdit">
-                            <a href="community_edit.jsp">수정</a>
+                            <a href="community_edit.jsp?articleSeq=<%=noticeDTO.getArticle_seq()%>">수정</a>
                         </button>
+                        <a href="community_list.jsp" class="on">삭제</a>
                     </div>
                 </div>
             </div>    

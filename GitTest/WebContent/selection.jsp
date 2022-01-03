@@ -1,7 +1,8 @@
+<%@page import="com.webtoon.DTO.mywebtoonDTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.usersDAO.webtoonDAO"%>
 <%@page import="com.webtoon.DTO.webtoonDTO"%>
 <%@page import="com.webtoon.DTO.usersDTO"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,7 +23,10 @@
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-    <link rel="stylesheet" href="assets/css/square_main.css">
+
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="assets/css/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/slick-theme.css">
 <!--
     
 TemplateMo 559 Zay Shop
@@ -36,7 +40,11 @@ https://templatemo.com/tm-559-zay-shop
 	<%
 		usersDTO dto = (usersDTO)session.getAttribute("dto");
 	
-		webtoonDTO wdto = (webtoonDTO)request.getAttribute("wdto");
+		webtoonDTO wdto1 = (webtoonDTO)session.getAttribute("wdto1");
+		ArrayList<webtoonDTO> wdto_genre = (ArrayList<webtoonDTO>)session.getAttribute("wdto_genre");
+		ArrayList<mywebtoonDTO> mwdto1 = (ArrayList<mywebtoonDTO>)session.getAttribute("mwdto1");
+		
+		
 	%>
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
@@ -55,9 +63,12 @@ https://templatemo.com/tm-559-zay-shop
                     <a href = "login.jsp" class="navbar-sm-brand text-light text-decoration-none">로그인&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <!-- 회원가입으로 이동 -->
                     <a href = "join.jsp" class="navbar-sm-brand text-light text-decoration-none">회원가입</a>
-                    <%}else { %>
+                    <%}else if(dto.getUser_yesno() == "no"){ %>
                     <a href = "selection.jsp" class="navbar-sm-brand text-light text-decoration-none">찜목록&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <a href = "update.jsp" class="navbar-sm-brand text-light text-decoration-none">회원정보수정&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+                    <a href = "LogoutCon.do" class="navbar-sm-brand text-light text-decoration-none">로그아웃</a>
+                    <%}else { %>
+                    <a href = "selection.jsp" class="navbar-sm-brand text-light text-decoration-none">찜목록&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <a href = "LogoutCon.do" class="navbar-sm-brand text-light text-decoration-none">로그아웃</a>
                     <%} %>
                 </div>
@@ -100,7 +111,7 @@ https://templatemo.com/tm-559-zay-shop
                         </li>
                         <%}else {%>
                         <li class="nav-item">
-                            <a class="nav-link" href="selectMember.jsp">회원관리</a>
+                            <a class="nav-link" href="adminMyPage.jsp">회원관리</a>
                         </li>
                         <%} %>
                     </ul>
@@ -108,7 +119,7 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="navbar align-self-center d-flex">
                     <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="웹툰 명">
                             <div class="input-group-text">
                                 <i class="fa fa-fw fa-search"></i>
                             </div>
@@ -157,7 +168,7 @@ https://templatemo.com/tm-559-zay-shop
     <section class="container py-5">
         <div class="row text-center pt-3">
             <div class="col-lg-6 m-auto">
-                <h1 class="h1">웹툰 찜하기 목록</h1>
+                <h1 class="h1">내가 찜한 웹툰 목록</h1>
                 <p>
                     My selelction
                 </p>
@@ -166,68 +177,68 @@ https://templatemo.com/tm-559-zay-shop
         
     </section>
     
-        <!-- Start Featured Product -->
-    <section class="bg-light">
+
+
+
+    <!-- Start Article -->
+    <section class="py-5">
+        <div class="container">
+			<section class="bg-light">
         <div class="container py-5">
-            <div class="row text-center py-3">
-                <div class="col-lg-6 m-auto">
-                    <h1 class="h1">Webtoon_search</h1>
-                    <div class="input-group mb-1">
-                        <!-- 웹툰 검색기능 -->
-                        <input type="text" class="form-control" id="webtoon_searchid" name="webtoon_search" placeholder="Search ...">
-                        <button onclick="webtoonSearch()" type="submit" class="input-group-text bg-success text-light">
-                            <i class="fa fa-fw fa-search text-white"></i>
-                        </button>
-                        <!-- 검색기능끝 -->
-                    </div>
+
+
+            <!--Start Carousel Wrapper-->
+            <div id="carousel-related-product">
+            
+            	
+			<%
+            	for(int i = 0; i < mwdto1.size(); i++){
+            		// 장르에 따른 값 잘나왔는지 확인
+            		System.out.println(mwdto1.get(i).getMwebtoon_name());
+            		
+            		out.print("<div class='p-2 pb-3'>");
+            		out.print("<div class='product-wap card rounded-0'>");
+            		out.print("<div class='card rounded-0'>");
+            		out.print("<img class='card-img rounded-0 img-fluid' src='"+ mwdto1.get(i).getMwebtoon_img() +"'>");
+            		out.print("<div class='card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center'>");
+            		out.print("<ul class='list-unstyled'>");
+            		out.print("<li><a class='btn btn-success text-white' href='shop-single.html'>♥ </a></li>");	
+            		out.print("</ul>");
+            		out.print("</div>");
+            		out.print("</div>");
+            		out.print("<div class='card-body'>");
+            		out.print("<a href='"+ mwdto1.get(i).getMwebtoon_link() +"' class='h3 text-decoration-none'>"+ mwdto1.get(i).getMwebtoon_name() +"</a>");
+            		//out.print("<a href ='webtoonInfoGo.do?webtoon_se="+wdto_genre.get(i).getWebtoon_seq()+"&webtoon_ge="+wdto_genre.get(i).getWebtoon_genre()+"' class='h3 text-decoration-none'>"+ wdto_genre.get(i).getWebtoon_name() +"</a>");
+            		out.print("<p>웹툰작가: "+ mwdto1.get(i).getMwebtoon_writer() +"</p>");
+            		out.print("<p>웹툰장르: "+ mwdto1.get(i).getMwebtoon_genre() +"</p>");
+            		out.print("<ul class='w-100 list-unstyled d-flex justify-content-between mb-0'>");
+            		out.print("<li>키워드:"+ wdto_genre.get(i).getWebtoon_keyword() +"</li>");
+            		out.print("<li class='pt-2'>");
+            		out.print("<span class='product-color-dot color-dot-red float-left rounded-circle ml-1'></span>");
+            		out.print("<span class='product-color-dot color-dot-blue float-left rounded-circle ml-1'></span>");
+            		out.print("<span class='product-color-dot color-dot-black float-left rounded-circle ml-1'></span>");
+            		out.print("<span class='product-color-dot color-dot-light float-left rounded-circle ml-1'></span>");
+            		out.print("<span class='product-color-dot color-dot-green float-left rounded-circle ml-1'></span>");
+            		out.print("</li>");
+            		out.print("</ul>");
+            		out.print("</div>");
+            		out.print("</div>");
+            		out.print("</div>");
+            		
+            	}
+            	
+            
+            %>		
+				
+
+				</div>
                 </div>
-            </div>
-           
-           
-           
-            <!-- 웹툰이미지들어갈장소 -->
-                 
-                <!-- 반복문 시작 -->
-                <div id=websearch class="row">
-                <%
-                
-                	webtoonDAO wdao = new webtoonDAO();
-                	ArrayList<webtoonDTO> web_arr = wdao.selectWebtoon();
-                	
-                	for(int i= 0; i < web_arr.size(); i++){
-                		        		
-                		out.print("<div class='col-12 col-md-4 mb-4'>");
-                		out.print("<div class='card h-100'>");
-                		out.print("<a href='shop-single.html'>");
-                		out.print("<img src='https://shared-comic.pstatic.net/thumb/webtoon/783054/thumbnail/thumbnail_IMAG06_4656dbaf-26ce-4aee-bde5-87a0b1714022.jpg' class='card-img-top' alt='...'>");
-                		out.print("</a>");
-                		out.print("<div class='card-body'>");
-                		out.print("<a href='shop-single.html' class='h2 text-decoration-none text-dark'>"+web_arr.get(i).getWebtoon_name()+"</a>");
-                		out.print("<ul class='list-unstyled d-flex justify-content-between'>");
-                		out.print("<li class='text-muted text-right'>"+web_arr.get(i).getWebtoon_writer()+"</li>");
-                		out.print("</ul>");
-                		out.print("<p class='card-text'>"+ web_arr.get(i).getWebtoon_content() +"</p>");
-                		out.print("<p class='text-muted'>"+ web_arr.get(i).getWebtoon_genre() +"</p>");
-                		out.print("</div>");
-                		out.print("</div>");
-                		out.print("</div>");
-                	}
-                	
-                %>
-
-                </div>
-                
-
-
-
-
+    			</section>
+				
+		</div>
         
-        </div>
     </section>
-    <!-- End Featured Product -->
-
-
-
+    <!-- End Article -->
 
 
     <!-- Start Footer -->
@@ -331,6 +342,42 @@ https://templatemo.com/tm-559-zay-shop
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/templatemo.js"></script>
     <script src="assets/js/custom.js"></script>
+    <!-- End Script -->
+
+    <!-- Start Slider Script -->
+    <script src="assets/js/slick.min.js"></script>
+    <script>
+        $('#carousel-related-product').slick({
+            infinite: true,
+            arrows: false,
+            slidesToShow: 4,
+            slidesToScroll: 3,
+            dots: true,
+            responsive: [{
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                }
+            ]
+        });
+    </script>
+    <!-- End Slider Script -->
     
     			<script type="text/javascript">
 				function webtoonSearch() {

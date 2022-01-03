@@ -22,7 +22,9 @@ import com.webtoon.users.UpdateService;
 import com.webtoon.users.UserSearchService;
 import com.webtoon.users.WebtoonInfoGoService;
 import com.webtoon.users.LogoutService;
+import com.webtoon.users.MyWebtoonJoinService;
 import com.webtoon.users.SearchService;
+import com.webtoon.users.SelectionService;
 
 
 
@@ -49,6 +51,13 @@ public class FrontController extends HttpServlet {
 		if(command.equals("LoginCon.do")) {
 			
 			com = new LoginService(); // 자식을 생성하는데 부모의 이름으로 생성 (업캐스팅) -> 장점: 각자의 객체를 생성하는 갯수를 줄여서 
+			nextpage = com.execute(request, response);
+			// Command Pattern
+			// 사용자의 요청을 객체인 클래스파일로 처리
+			
+		}else if(command.equals("Selection.do")) {
+			
+			com = new SelectionService(); // 자식을 생성하는데 부모의 이름으로 생성 (업캐스팅) -> 장점: 각자의 객체를 생성하는 갯수를 줄여서 
 			nextpage = com.execute(request, response);
 			// Command Pattern
 			// 사용자의 요청을 객체인 클래스파일로 처리
@@ -106,12 +115,13 @@ public class FrontController extends HttpServlet {
 		}else if(command.equals("webtoonInfoGo.do")) {
 			
 			com = new WebtoonInfoGoService();
-			nextpage =com.execute(request, response);
+			nextpage = com.execute(request, response);
 			
-		}else if(command.equals("InfoGosearchUser.do")) {
+		}else if(command.equals("myWebtoonjoin.do")) {
 			
-			com = new UserSearchService();
-			com.execute(request, response);
+			com = new MyWebtoonJoinService();
+			nextpage = com.execute(request, response);
+			
 		}
 		if(nextpage != null) {			
 			response.sendRedirect(nextpage);

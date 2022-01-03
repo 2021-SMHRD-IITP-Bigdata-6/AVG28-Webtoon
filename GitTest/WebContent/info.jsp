@@ -1,3 +1,5 @@
+<%@page import="com.sun.istack.internal.NotNull"%>
+<%@page import="com.webtoon.DTO.mywebtoonDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.usersDAO.webtoonDAO"%>
 <%@page import="com.webtoon.DTO.webtoonDTO"%>
@@ -42,7 +44,9 @@ https://templatemo.com/tm-559-zay-shop
 		webtoonDTO wdto1 = (webtoonDTO)session.getAttribute("wdto1");
 		ArrayList<webtoonDTO> wdto_genre = (ArrayList<webtoonDTO>)session.getAttribute("wdto_genre");
 		
-
+		mywebtoonDTO mwdto = (mywebtoonDTO)session.getAttribute("mwdto");
+		
+		ArrayList<mywebtoonDTO> mwdto1 = (ArrayList<mywebtoonDTO>)session.getAttribute("mwdto1");
 		
 	%>
     <!-- Start Top Nav -->
@@ -63,11 +67,11 @@ https://templatemo.com/tm-559-zay-shop
                     <!-- 회원가입으로 이동 -->
                     <a href = "join.jsp" class="navbar-sm-brand text-light text-decoration-none">회원가입</a>
                     <%}else if(dto.getUser_yesno() == "no"){ %>
-                    <a href = "selection.jsp" class="navbar-sm-brand text-light text-decoration-none">찜목록&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+                    <a href = "Selection.do?user_id=<%=dto.getUser_id() %>&user_pw=<%=dto.getUser_pw() %>" class="navbar-sm-brand text-light text-decoration-none">찜목록&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <a href = "update.jsp" class="navbar-sm-brand text-light text-decoration-none">회원정보수정&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <a href = "LogoutCon.do" class="navbar-sm-brand text-light text-decoration-none">로그아웃</a>
                     <%}else { %>
-                    <a href = "selection.jsp" class="navbar-sm-brand text-light text-decoration-none">찜목록&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+                    <a href = "Selection.do?user_id=<%=dto.getUser_id() %>&user_pw=<%=dto.getUser_pw() %>" class="navbar-sm-brand text-light text-decoration-none">찜목록&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
                     <a href = "LogoutCon.do" class="navbar-sm-brand text-light text-decoration-none">로그아웃</a>
                     <%} %>
                 </div>
@@ -105,9 +109,7 @@ https://templatemo.com/tm-559-zay-shop
                         <%if(dto==null) {%>
 
                         <%}else if(dto.getUser_yesno().equals("no")){ %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="myPage.jsp">마이페이지</a>
-                        </li>
+                        
                         <%}else {%>
                         <li class="nav-item">
                             <a class="nav-link" href="selectMember.jsp">회원관리</a>
@@ -174,8 +176,6 @@ https://templatemo.com/tm-559-zay-shop
                    
                 </div>
 
-
-				
                 <!-- col end -->
                 <div class="col-lg-7 mt-5">
                     <div class="card">
@@ -213,29 +213,27 @@ https://templatemo.com/tm-559-zay-shop
                                 </li>
                                 <li class="list-inline-item">
                                     <!-- 키워드---->
+                                    <%System.out.println("info 키워드 값 들어옴 : " + wdto1.getWebtoon_keyword()); %>
                                     <p class="text-muted"><strong><%=wdto1.getWebtoon_keyword() %></strong></p>
                                 </li>
                             </ul>
 
-                            <h6>Specification:</h6>
-                            <ul class="list-unstyled pb-3">
-                                <li>Lorem ipsum dolor sit</li>
-                                <li>Amet, consectetur</li>
-                                <li>Adipiscing elit,set</li>
-                                <li>Duis aute irure</li>
-                                <li>Ut enim ad minim</li>
-                                <li>Dolore magna aliqua</li>
-                                <li>Excepteur sint</li>
-                            </ul>
+
 
                                 <input type="hidden" name="product-title" value="Activewear">
-                               
+
                                 <div class="row pb-3">
                                     <div class="col d-grid">
-                                        <input type="button" onclick="location.href='<%=wdto1.getWebtoon_link()%>';" value="찜하기" class="btn btn-success btn-lg" />
+             
+                                    	<%if(mwdto==null){ %>
+                                        <input type="button" onclick="location.href='myWebtoonjoin.do?mwebtoon_se=<%=wdto1.getWebtoon_seq()%>&muser_i=<%=dto.getUser_id()%>&mwebtoon_nam=<%=wdto1.getWebtoon_name()%>&mwebtoon_write=<%=wdto1.getWebtoon_writer() %>&mwebtoon_conten=<%=wdto1.getWebtoon_content() %>&mwebtoon_genr=<%=wdto1.getWebtoon_genre() %>&mwebtoon_im=<%=wdto1.getWebtoon_img() %>&mwebtoon_lin=<%=wdto1.getWebtoon_link() %>&mwebtoon_keywor=<%=wdto1.getWebtoon_keyword() %>'" value="찜하기" class="btn btn-success btn-lg" />
+                                    	<%}else if(mwdto.getMwebtoon_seq().equals(wdto1.getWebtoon_seq())){ %>
+                                    	<input type="button" onclick="location.href='<%=wdto1.getWebtoon_link()%>'" value="찜삭제" class="btn btn-success btn-lg" />
+                                    	<%} %>
                                     </div>
                                     <div class="col d-grid">
-                                        <input type="button" onclick="location.href='<%=wdto1.getWebtoon_link()%>';" value="웹툰보러가기" class="btn btn-success btn-lg" />
+                                    	<input type="button" onclick="window.open('<%=wdto1.getWebtoon_link()%>')" value="웹툰보러가기" class="btn btn-success btn-lg" />
+                                        
                                     </div>
                                 </div>
 
@@ -251,7 +249,7 @@ https://templatemo.com/tm-559-zay-shop
     <section class="py-5">
         <div class="container">
             <div class="row text-left p-2 pb-3">
-                <h4>같은 작가의 다른작품</h4>
+                <h4>같은 장르의 다른작품</h4>
             </div>
 
 			<section class="bg-light">
@@ -262,18 +260,33 @@ https://templatemo.com/tm-559-zay-shop
             <div id="carousel-related-product">
             
             	
+            	
 			<%
+				
+			
             	for(int i = 0; i < wdto_genre.size(); i++){
             		// 장르에 따른 값 잘나왔는지 확인
-            		System.out.println(wdto_genre.get(i).getWebtoon_name());
-            		
+            		boolean ismy = false;
+            		for(int j=0;j<mwdto1.size();j++){
+            			if(mwdto1.get(j).getMwebtoon_seq().equals(wdto_genre.get(i).getWebtoon_seq())){
+            				ismy=true;
+            				break;
+            			}
+            		}
             		out.print("<div class='p-2 pb-3'>");
             		out.print("<div class='product-wap card rounded-0'>");
             		out.print("<div class='card rounded-0'>");
             		out.print("<img class='card-img rounded-0 img-fluid' src='"+ wdto_genre.get(i).getWebtoon_img() +"'>");
             		out.print("<div class='card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center'>");
             		out.print("<ul class='list-unstyled'>");
-            		out.print("<li><a class='btn btn-success text-white' href='shop-single.html'><i class='far fa-heart'></i></a></li");
+            		if(mwdto1==null){
+            			
+            		}
+            		else if(ismy){
+            			out.print("<li><a class='btn btn-success text-white' href='shop-single.html'>♥ </a></li>");	
+            		}else{
+            			out.print("<li><a class='btn btn-success text-white' href='shop-single.html'><i class='far fa-heart'></i></a></li>");
+            		}
             		out.print("</ul>");
             		out.print("</div>");
             		out.print("</div>");
@@ -283,7 +296,7 @@ https://templatemo.com/tm-559-zay-shop
             		out.print("<p>웹툰작가: "+ wdto_genre.get(i).getWebtoon_writer() +"</p>");
             		out.print("<p>웹툰장르: "+ wdto_genre.get(i).getWebtoon_genre() +"</p>");
             		out.print("<ul class='w-100 list-unstyled d-flex justify-content-between mb-0'>");
-            		out.print("<li>키워드:</li>");
+            		out.print("<li>키워드:"+ wdto_genre.get(i).getWebtoon_keyword() +"</li>");
             		out.print("<li class='pt-2'>");
             		out.print("<span class='product-color-dot color-dot-red float-left rounded-circle ml-1'></span>");
             		out.print("<span class='product-color-dot color-dot-blue float-left rounded-circle ml-1'></span>");
@@ -299,40 +312,7 @@ https://templatemo.com/tm-559-zay-shop
             	}
             	
             
-            %>
-
-			<!--  
-                <div class="p-2 pb-3">
-                    <div class="product-wap card rounded-0">
-                        <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="assets/img/shop_08.jpg">
-                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                                <ul class="list-unstyled">
-                                    <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <a href="shop-single.html" class="h3 text-decoration-none">Red Clothing</a>
-                            <p>웹툰작가:</p>
-                            <p>웹툰장르:</p>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>키워드:</li>
-                                <li>아무거나1, ㅋㅋ</li>
-                                <li class="pt-2">
-                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
-                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-			-->
-				
-	
+            %>			
 				
 
 				</div>

@@ -1,4 +1,6 @@
-<%@page import="com.webtoon.DTO.webtoonDTO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.usersDAO.NoticeDAO"%>
+<%@page import="com.webtoon.DTO.NoticeDTO"%>
 <%@page import="com.webtoon.DTO.usersDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -7,7 +9,7 @@
 <html lang="en">
 
 <head>
-    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <title>글쓰기</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -24,7 +26,6 @@
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
     <link rel="stylesheet" href="assets/css/Sqmedia.css">
     <link rel="stylesheet" href="assets/css/Sqstyle.css">
-    <title>Insert title here</title>
 <!--
     
 TemplateMo 559 Zay Shop
@@ -39,7 +40,6 @@ https://templatemo.com/tm-559-zay-shop
 	<%
 		usersDTO dto = (usersDTO)session.getAttribute("dto");
 	
-		webtoonDTO wdto = (webtoonDTO)request.getAttribute("wdto");
 	%>
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
@@ -188,36 +188,36 @@ https://templatemo.com/tm-559-zay-shop
                     <p>웹툰에 대한 이야기를 나눠보세요!</p>
                 </div>
                 <div class="board_write_wrap">
+                <form method ="post" action="community_write_action.jsp">
                     <div class="board_write">
                         <div class="title">
                             <dl>
                                 <dt>제목</dt>
-                                <dd><input type="text" placeholder="제목 입력"></dd>
+                                <dd><input type="text" placeholder="제목 입력" name="article_subject"></dd>
                             </dl>
                         </div>
                         <div class="info">
                             <dl>
                                 <dt>글쓴이</dt>
-                                <dd><input type="text" placeholder="글쓴이 입력"></dd>
+                           		<dd><input type="text" placeholder="글쓴이 입력" name="user_id"></dd>
                             </dl>
-                            <dl>
-                                <dt>비밀번호</dt>
-                                <dd><input type="password" placeholder="비밀번호 입력"></dd>
-                            </dl>
+<!--                             <dl> -->
+<!--                                 <dt>비밀번호</dt> -->
+<!--                                 <dd><input type="password" placeholder="비밀번호 입력" name="user_id"></dd> -->
+<!--                             </dl> -->
                         </div>
                         <div class="cont">
-                            <textarea placeholder="내용 입력"></textarea>
+                            <textarea placeholder="내용 입력" name="article_content"></textarea>
                         </div>
                     </div>
                     <div class="bt_wrap">
                         
                         
                         <!-- 글쓰기 버튼 -->
-                        <button type="button" name = "sqWriter">
-                            <a href="community_list.jsp" class="on">등록</a>
-                        </button>
+                        <button type="submit" class="on" name = "sqWriter"><a>저장</a></button>
                         <a href="community_list.jsp">취소</a>
                     </div>
+                    </form>
                 </div>
             </div>
 

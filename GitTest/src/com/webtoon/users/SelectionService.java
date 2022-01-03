@@ -14,7 +14,7 @@ import com.usersDAO.usersDAO;
 import com.webtoon.DTO.mywebtoonDTO;
 import com.webtoon.DTO.usersDTO;
 
-public class LoginService implements Command {
+public class SelectionService implements Command {
 
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -45,7 +45,7 @@ public class LoginService implements Command {
 			session.setAttribute("dto",dto);
 			session.setAttribute("mwdto1",mwdto1);
 		
-			nextpage = "main.jsp";
+			nextpage = "selection.jsp";
 		
 		}else {
 
