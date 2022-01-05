@@ -40,7 +40,7 @@ if(count > 0){
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <title>웹툰 추천 사이트</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -54,6 +54,11 @@ if(count > 0){
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+    
+    
+    
+
+
 </head>
 
 <body>
@@ -71,10 +76,6 @@ if(count > 0){
         <div class="container text-light">
             <div class="w-100 d-flex justify-content-between">
                 <div>
-                    <i class="fa fa-envelope mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
-                    <i class="fa fa-phone mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
                 </div>
                 <div>
                     <!-- <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a> -->
@@ -126,9 +127,7 @@ if(count > 0){
                         <%if(dto==null) {%>
 
                         <%}else if(dto.getUser_yesno().equals("no")){ %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="myPage.jsp">마이페이지</a>
-                        </li>
+
                         <%}else {%>
                         <li class="nav-item">
                             <a class="nav-link" href="selectMember.jsp">회원관리</a>
@@ -303,7 +302,7 @@ if(count > 0){
     </section>
     <!-- 플랫폼 이동 구간 끝 -->
     
- 
+
 
     <!-- Start Featured Product -->
     <section class="bg-light">
@@ -336,13 +335,13 @@ if(count > 0){
  						<div class="card h-100">
  							<a href="webtoonInfoGo.do?webtoon_se=<%=web_arr.get(i).getWebtoon_seq()%>&webtoon_ge=<%=web_arr.get(i).getWebtoon_genre()%>&webtoon_i=<%=dto.getUser_id()%>"><img src="<%=web_arr.get(i).getWebtoon_img()%>" class="card-img-top" alt="..."></a>
  							<div class="card-body">
- 								<a href="shop-single.html" class="h2 text-decoration-none text-dark"><%= web_arr.get(i).getWebtoon_name() %></a>
+ 								<a href="<%=web_arr.get(i).getWebtoon_link() %>" class="h2 text-decoration-none text-dark"><%= web_arr.get(i).getWebtoon_name() %></a>
  								<ul class="list-unstyled d-flex justify-content-between">
 									<li class="text-muted text-right"><%= web_arr.get(i).getWebtoon_writer() %></li>
 								</ul>
  								<p class="card-text"><%= web_arr.get(i).getWebtoon_content() %></p>
 								<p class="text-muted"><%= web_arr.get(i).getWebtoon_genre() %></p>
-								<p class="text-muted"><%= web_arr.get(i).getWebtoon_keyword() %></p>
+
  							</div>
  						</div>
  					</div>               
@@ -428,15 +427,15 @@ if(count > 0){
                     <ul class="list-unstyled text-light footer-link-list">
                         <li>
                             <i class="fas fa-map-marker-alt fa-fw"></i>
-                            123 Consectetur at ligula 10660
+                            	광주 남구 송암로 60 광주CGI센터 2층
                         </li>
                         <li>
                             <i class="fa fa-phone fa-fw"></i>
-                            <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                            <a class="text-decoration-none">062-655-3506,9 </a>
                         </li>
                         <li>
                             <i class="fa fa-envelope fa-fw"></i>
-                            <a class="text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                            <a class="text-decoration-none">smhrd@smhrd.or.kr</a>
                         </li>
                     </ul>
                 </div>

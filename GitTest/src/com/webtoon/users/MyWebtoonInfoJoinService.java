@@ -16,7 +16,7 @@ import com.webtoon.DTO.mywebtoonDTO;
 import com.webtoon.DTO.usersDTO;
 import com.webtoon.DTO.webtoonDTO;
 
-public class MyWebtoonJoinService implements Command {
+public class MyWebtoonInfoJoinService implements Command {
 
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -55,7 +55,7 @@ public class MyWebtoonJoinService implements Command {
 			session.setAttribute("mwdto1",mwdto1);
 			
 			// JoinCon에 있는 request공간에서 -> joinSuccess.jsp에 보냄
-			RequestDispatcher dis = request.getRequestDispatcher("joinSuccess.jsp");
+			RequestDispatcher dis = request.getRequestDispatcher("joinSuccessInfo.jsp");
 			dis.forward(request, response); // foward방식을 사용하면 return에 null 값을 보내줘야한다.
 			
 		} else {

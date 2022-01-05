@@ -162,7 +162,7 @@ public class webtoonDAO {
 				System.out.println("슬라이드dao실행값" + webtoon_genre);
 				System.out.println("슬라이드dao실행값" + webtoon_img);
 				System.out.println("슬라이드dao실행값" + webtoon_link);
-				System.out.println("슬라이드dao실행값" + webtoon_keyword);
+				System.out.println("슬라이드dao실행값키워드 " + webtoon_keyword);
 			}
 
 		} catch (Exception e) {
@@ -349,6 +349,56 @@ public class webtoonDAO {
 		}
 		return web_arr;
 
-	}
+	}   public ArrayList<webtoonDTO> keyword_hWebtoon(String[] keyword) {
+		// ArrayList 로 태그 값을 가져와서 조회
+		ArrayList<webtoonDTO> key_arr = new ArrayList<webtoonDTO>();
 
+		try {
+
+			getConn();
+			
+			String sql = "select * from t_webtoon where webtoon_keyword  like '%"+keyword[0]+"%'";
+			
+			//System.out.println(keyword[1]);
+			
+			for(int i = 1 ; i< keyword.length;i++ ) {
+				sql = "select * from (" + sql +  ")where webtoon_keyword  like '%"+keyword[i]+"%'";
+				//sql+="AND like '%"+keyword[i]+"%' ";
+				
+			}
+
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				
+				String webtoon_seq = rs.getString(1);
+				String webtoon_name = rs.getString(2);
+				String webtoon_writer = rs.getString(3);
+				String webtoon_content = rs.getString(4);
+				String webtoon_genre = rs.getString(5);
+				String webtoon_img = rs.getString(6);
+				String webtoon_link = rs.getString(7);
+				String webtoon_keyword = rs.getString(8);
+				wdto = new webtoonDTO(webtoon_seq, webtoon_name, webtoon_writer, webtoon_content, webtoon_genre,
+						webtoon_img, webtoon_link, webtoon_keyword);
+				key_arr.add(wdto);
+			}
+
+		} catch (Exception e) {
+			System.out.println("클래스파일 로딩 실패");
+			e.printStackTrace();
+
+		} finally {
+
+			close();
+
+		}
+		return key_arr;
+
+	}
+	
+
+
+	
 }

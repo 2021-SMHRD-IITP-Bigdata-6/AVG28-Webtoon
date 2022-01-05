@@ -110,9 +110,7 @@ https://templatemo.com/tm-559-zay-shop
                         <%if(dto==null) {%>
 
                         <%}else if(dto.getUser_yesno().equals("no")){ %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="myPage.jsp">마이페이지</a>
-                        </li>
+
                         <%}else {%>
                         <li class="nav-item">
                             <a class="nav-link" href="selectMember.jsp">회원관리</a>
@@ -205,13 +203,20 @@ https://templatemo.com/tm-559-zay-shop
                         </div>
                     </div>
                     <div class="bt_wrap">
-                        <a href="community_list.jsp" class="on">목록</a>
-                        
+                        <a href="community_list.jsp" claess="on">목록</a>
+                      <!-- 삭제확인 -->  
                         <!-- 수정하는 버튼 -->
                         <button type="button" id = "goEdit">
                             <a href="community_edit.jsp?articleSeq=<%=noticeDTO.getArticle_seq()%>">수정</a>
                         </button>
-                        <a href="community_list.jsp" class="on">삭제</a>
+                        <%
+                        if(dto != null && dto.getUser_id().equals("admin")){
+                        %>
+                        <a href="community_delete_action.jsp?articleSeq=<%=noticeDTO.getArticle_seq()%>" class="on">삭제</a>
+                        <%
+                        }
+                        %>
+                        
                     </div>
                 </div>
             </div>    

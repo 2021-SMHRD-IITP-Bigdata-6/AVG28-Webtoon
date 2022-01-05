@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.usersDAO.webtoonDAO"%>
 <%@page import="com.webtoon.DTO.usersDTO"%>
 <%@page import="com.webtoon.DTO.webtoonDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -6,7 +8,7 @@
 <html lang="en">
 <script src="jquery-3.6.0.min.js"></script>
 <head>
-    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <title>골라잡으세요</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -27,6 +29,9 @@
 		usersDTO dto = (usersDTO)session.getAttribute("dto");
 	
 		webtoonDTO wdto = (webtoonDTO)request.getAttribute("wdto");
+		
+		ArrayList<webtoonDTO> recwdto = (ArrayList<webtoonDTO>)session.getAttribute("key_arr");
+		
 	%>
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
@@ -88,9 +93,7 @@
                         <%if(dto==null) {%>
 
                         <%}else if(dto.getUser_yesno().equals("no")){ %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="myPage.jsp">마이페이지</a>
-                        </li>
+
                         <%}else {%>
                         <li class="nav-item">
                             <a class="nav-link" href="selectMember.jsp">회원관리</a>
@@ -163,74 +166,90 @@
             </form>
         </div>
     </div>
+    
+    <!-- Start Featured Product -->
+    <section class="bg-light">
+        <div class="container py-5">
+            
+               <!-- Start Article -->
+    <section class="py-5">
+        <div class="container">
+			<section class="bg-light">
+        <div class="container py-5">
 
+
+            <!--Start Carousel Wrapper-->
+            <div id="carousel-related-product">
+            
+            	
+
+				
+
+				</div>
+                </div>
+    			</section>
+				
+		</div>
+        
+    </section>
+    <!-- End Article -->
+
+            </div>
+        </div>
+    </section>
+    <!-- End Featured Product -->
 
     
     
     
     <div  class="tag_select">
         <!-- 해시태그 검색 만들기 -->
-        <h2>캐릭터에 관한 태그</h2>
+        
         <div class="tag_select2">
             <table align="center">    
                 <tr>
-                    <td><button class="tag_btn">멍한</button></td>
-                    <td><button class="tag_btn">귀여운</button></td>
-                    <td><button class="tag_btn">착한</button></td>
-                    <td><button class="tag_btn">아름다운</button></td>
-                    <td><button class="tag_btn">똑똑한</button></td>
+                    <td><button class="tag_btn">로맨스</button></td>
+                    <td><button class="tag_btn">개그</button></td>
+                    <td><button class="tag_btn">학원물</button></td>
+                    <td><button class="tag_btn">성장물</button></td>
+                    <td><button class="tag_btn">힐링</button></td>
+                    <td><button class="tag_btn">가정</button></td>
+                    <td><button class="tag_btn">폭력</button></td>
+                    <td><button class="tag_btn">반전</button></td>
+                    <td><button class="tag_btn">종말</button></td>
+                    <td><button class="tag_btn">감성</button></td>
                 </tr>
                 <tr>
-                    <td><button class="tag_btn">강한</button></td>
-                    <td><button class="tag_btn">섹시한</button></td>
-                    <td><button class="tag_btn">사랑스러운</button></td>
-                    <td><button class="tag_btn">멋있는</button></td>
-                    <td><button class="tag_btn">멍청한</button></td>
+                    <td><button class="tag_btn">공포</button></td>
+                    <td><button class="tag_btn">재난</button></td>
+                    <td><button class="tag_btn">판타지</button></td>
+                    <td><button class="tag_btn">전생회귀</button></td>
+                    <td><button class="tag_btn">먼치킨</button></td>
+                    <td><button class="tag_btn" >일상</button></td>
+                    <td><button class="tag_btn" >재능</button></td>
+                    <td><button class="tag_btn" >성장</button></td>
+                    <td><button class="tag_btn" >고생</button></td>
+                    <td><button class="tag_btn" >범죄</button></td>
                 </tr>
-            </table>
-        </div>
-
-
-
-        <h2>스토리에 관한 태그</h2>
-        <div class="tag_select2">
-            <table align="center">    
-                <tr>
-                    <td><button class="tag_btn">빠른</button></td>
-                    <td><button class="tag_btn" value="#">어려운</button></td>
-                    <td><button class="tag_btn" value="#">자연스러운</button></td>
-                    <td><button class="tag_btn" value="#">흥미진진한</button></td>
-                    <td><button class="tag_btn" value="#">현실적인</button></td>
-                </tr>
-                <tr>
-                    <td><button class="tag_btn" value="#">성장하는</button></td>
-                    <td><button class="tag_btn" value="#">뜬금없는</button></td>
-                    <td><button class="tag_btn" value="#">유일한</button></td>
-                    <td><button class="tag_btn" value="#">정치적인</button></td>
-                    <td><button class="tag_btn" value="#">인정하는</button></td>
-                    
-                </tr>
-            </table>
-        </div>
-        <h2>분위기에 관한태그</h2>
-        <div class="tag_select2"> 
-        <table align="center">    
-            <tr>
+                 <tr>
+                <td><button class="tag_btn">불행한</button></td>
+                <td><button class="tag_btn">고소한</button></td>
+                <td><button class="tag_btn">설레는</button></td>
+                <td><button class="tag_btn">따뜻한</button></td>
+                <td><button class="tag_btn">소름</button></td>
+                <td><button class="tag_btn">애틋한</button></td>
+                <td><button class="tag_btn">웃긴</button></td>
+                <td><button class="tag_btn">살벌한</button></td>
                 <td><button class="tag_btn">무서운</button></td>
-                <td><button class="tag_btn">행복한</button></td>
-                <td><button class="tag_btn">소름돋는</button></td>
-                <td><button class="tag_btn">밝은</button></td>
-                <td><button class="tag_btn">제대로된</button></td>
+                <td><button class="tag_btn">외로운</button></td>
             </tr>
-            <tr>
-                <td><button class="tag_btn">빛나는</button></td>
-                <td><button class="tag_btn">달콤한</button></td>
-                <td><button class="tag_btn">신선한</button></td>
-                <td><button class="tag_btn">심각한</button></td>
-                <td><button class="tag_btn">훈훈한</button></td>
-            </tr>
-        </table>
+            </table>
         </div>
+
+
+
+        
+        
 
 
             <div>
@@ -245,12 +264,13 @@
         $('.tag_btn').on('click', function(){
             var className = $(this).attr('class');
 
-            if($(this).hasClass('unclicked')){
-                $(this).removeClass('unclicked');
-                $(this).addClass('clicked');
-            }else{
-                $(this).removeClass('clicked');
+            if($(this).hasClass('clicked')){
+            	$(this).removeClass('clicked');
                 $(this).addClass('unclicked');
+            }else{
+            	$(this).removeClass('unclicked');
+                $(this).addClass('clicked');
+                
             }
         });
 
@@ -265,6 +285,7 @@
                 list.push(btn1.innerHTML);
             }
             console.log(list);
+            location.href="keyWebtoon.do?data="+list;
         });
         
         </script>
@@ -279,52 +300,7 @@
     
    
 
-    <!-- Start Featured Product -->
-    <section class="bg-light">
-        <div class="container py-5">
-            
-           
-           
-            
-           
-            <!-- 필터된 웹툰이미지들어갈장소 -->
-            <div class="row">
-                <!-- 반복문 시작 -->
-                <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <!-- 웹툰링크 들어갈 장소 -->
-                        <a href="shop-single.html">
-                            <!-- 웹툰이미지 들어갈 장소 -->
-                            <img src="./assets/img/feature_prod_01.jpg" class="card-img-top" alt="...">
-                        </a>
-                        <div class="card-body">
-                            <!-- 여기도 웹툰 링크 들어갈 장소 -->
-                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">여신강림</a>
-                            <ul class="list-unstyled d-flex justify-content-between">
-                                <li class="text-muted text-right">웹툰 작가이름</li>
-                            </ul>
-                            <!-- 웹툰이름 -->
-                            <p class="card-text">
-                                <!-- 웹툰내용 -->
-                                네웹 대표 글로벌 인기작! 주경, 수호, 서준. 세 청춘의 두근두근 눈호강 로맨스~♡<br>
-                                메이크업으로 여신이 된 주경이는 꿈과 사랑을 이룰 수 있을까?
-                            </p>
-                            <p class="text-muted">로맨스</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- 웹툰이미지 반복문 -->
-                
 
-
-
-                
-               
-               
-            </div>
-        </div>
-    </section>
-    <!-- End Featured Product -->
 
 
     <!-- Start Footer -->

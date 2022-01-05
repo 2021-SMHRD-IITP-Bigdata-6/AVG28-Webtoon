@@ -9,7 +9,7 @@
 <html lang="en">
 
 <head>
-    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <title>찜 목록</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -27,13 +27,17 @@
     <!-- Slick -->
     <link rel="stylesheet" type="text/css" href="assets/css/slick.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/slick-theme.css">
-<!--
-    
-TemplateMo 559 Zay Shop
 
-https://templatemo.com/tm-559-zay-shop
 
--->
+<style type="text/css">
+
+
+element.style {
+    height: fit-content;
+}
+</style>
+
+
 </head>
 
 <body>
@@ -106,9 +110,7 @@ https://templatemo.com/tm-559-zay-shop
                         <%if(dto==null) {%>
 
                         <%}else if(dto.getUser_yesno().equals("no")){ %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="myPage.jsp">마이페이지</a>
-                        </li>
+
                         <%}else {%>
                         <li class="nav-item">
                             <a class="nav-link" href="adminMyPage.jsp">회원관리</a>
@@ -184,7 +186,7 @@ https://templatemo.com/tm-559-zay-shop
     <section class="py-5">
         <div class="container">
 			<section class="bg-light">
-        <div class="container py-5">
+        <div class="container py-5" style="height: fit-content;">
 
 
             <!--Start Carousel Wrapper-->
@@ -192,6 +194,7 @@ https://templatemo.com/tm-559-zay-shop
             
             	
 			<%
+			
             	for(int i = 0; i < mwdto1.size(); i++){
             		// 장르에 따른 값 잘나왔는지 확인
             		System.out.println(mwdto1.get(i).getMwebtoon_name());
@@ -202,17 +205,16 @@ https://templatemo.com/tm-559-zay-shop
             		out.print("<img class='card-img rounded-0 img-fluid' src='"+ mwdto1.get(i).getMwebtoon_img() +"'>");
             		out.print("<div class='card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center'>");
             		out.print("<ul class='list-unstyled'>");
-            		out.print("<li><a class='btn btn-success text-white' href='shop-single.html'>♥ </a></li>");	
+            		out.print("<li><a class='btn btn-success text-white' href='myWebtoonDeleteCon.do?muser_i="+ dto.getUser_id() +"&mwebtoon_se="+ mwdto1.get(i).getMwebtoon_seq() +"'>♥ </a></li>");	
             		out.print("</ul>");
             		out.print("</div>");
             		out.print("</div>");
             		out.print("<div class='card-body'>");
-            		out.print("<a href='"+ mwdto1.get(i).getMwebtoon_link() +"' class='h3 text-decoration-none'>"+ mwdto1.get(i).getMwebtoon_name() +"</a>");
+            		out.print("<a href='webtoonInfoGo.do?webtoon_se="+ mwdto1.get(i).getMwebtoon_seq() +"&webtoon_ge="+ mwdto1.get(i).getMwebtoon_genre() +"&webtoon_i="+ dto.getUser_id() +"' class='h3 text-decoration-none'>"+ mwdto1.get(i).getMwebtoon_name() +"</a>");
             		//out.print("<a href ='webtoonInfoGo.do?webtoon_se="+wdto_genre.get(i).getWebtoon_seq()+"&webtoon_ge="+wdto_genre.get(i).getWebtoon_genre()+"' class='h3 text-decoration-none'>"+ wdto_genre.get(i).getWebtoon_name() +"</a>");
             		out.print("<p>웹툰작가: "+ mwdto1.get(i).getMwebtoon_writer() +"</p>");
             		out.print("<p>웹툰장르: "+ mwdto1.get(i).getMwebtoon_genre() +"</p>");
             		out.print("<ul class='w-100 list-unstyled d-flex justify-content-between mb-0'>");
-            		out.print("<li>키워드:"+ wdto_genre.get(i).getWebtoon_keyword() +"</li>");
             		out.print("<li class='pt-2'>");
             		out.print("<span class='product-color-dot color-dot-red float-left rounded-circle ml-1'></span>");
             		out.print("<span class='product-color-dot color-dot-blue float-left rounded-circle ml-1'></span>");

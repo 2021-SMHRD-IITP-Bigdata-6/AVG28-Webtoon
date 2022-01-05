@@ -7,8 +7,6 @@
     pageEncoding="UTF-8"%>
 
 
-
-
 					<%
 					usersDTO dto = (usersDTO)session.getAttribute("dto");
 					
@@ -22,7 +20,7 @@
 				         let wseq = '<%=wdto1.getWebtoon_seq()%>';
 				         let wgenre = '<%=wdto1.getWebtoon_genre()%>';
 				         let user_id = '<%=dto.getUser_id()%>';
-				         document.location.href="webtoonSelectGo.do?webtoon_se="+wseq+"&webtoon_ge="+wgenre+"&webtoon_i="+user_id;
+				         document.location.href="webtoonInfoGo.do?webtoon_se="+wseq+"&webtoon_ge="+wgenre+"&webtoon_i="+user_id;
 				    </script>
 
 <!DOCTYPE html>
@@ -50,7 +48,7 @@
 			<div id="wrapper">
 				<!-- Menu -->
 					<nav id="Update">
-					<font size="8">찜 성공</font><br>
+					<font size="8">찜 Info 성공</font><br>
 					정보를 확인하세요<br><br>
 
 						<table>

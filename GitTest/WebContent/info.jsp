@@ -10,7 +10,7 @@
 <html lang="en">
 
 <head>
-    <title>Zay Shop - Product Detail Page</title>
+    <title>상세 페이지</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -207,16 +207,7 @@ https://templatemo.com/tm-559-zay-shop
                                 </li>
                             </ul>
 
-                            <ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <h6>키워드 :</h6>
-                                </li>
-                                <li class="list-inline-item">
-                                    <!-- 키워드---->
-                                    <%System.out.println("info 키워드 값 들어옴 : " + wdto1.getWebtoon_keyword()); %>
-                                    <p class="text-muted"><strong><%=wdto1.getWebtoon_keyword() %></strong></p>
-                                </li>
-                            </ul>
+
 
 
 
@@ -226,9 +217,9 @@ https://templatemo.com/tm-559-zay-shop
                                     <div class="col d-grid">
              
                                     	<%if(mwdto==null){ %>
-                                        <input type="button" onclick="location.href='myWebtoonjoin.do?mwebtoon_se=<%=wdto1.getWebtoon_seq()%>&muser_i=<%=dto.getUser_id()%>&mwebtoon_nam=<%=wdto1.getWebtoon_name()%>&mwebtoon_write=<%=wdto1.getWebtoon_writer() %>&mwebtoon_conten=<%=wdto1.getWebtoon_content() %>&mwebtoon_genr=<%=wdto1.getWebtoon_genre() %>&mwebtoon_im=<%=wdto1.getWebtoon_img() %>&mwebtoon_lin=<%=wdto1.getWebtoon_link() %>&mwebtoon_keywor=<%=wdto1.getWebtoon_keyword() %>'" value="찜하기" class="btn btn-success btn-lg" />
+                                        <input type="button" onclick="location.href='myWebtoonInfojoin.do?mwebtoon_se=<%=wdto1.getWebtoon_seq()%>&muser_i=<%=dto.getUser_id()%>&mwebtoon_nam=<%=wdto1.getWebtoon_name()%>&mwebtoon_write=<%=wdto1.getWebtoon_writer() %>&mwebtoon_conten=<%=wdto1.getWebtoon_content() %>&mwebtoon_genr=<%=wdto1.getWebtoon_genre() %>&mwebtoon_im=<%=wdto1.getWebtoon_img() %>&mwebtoon_lin=<%=wdto1.getWebtoon_link() %>&mwebtoon_keywor=<%=wdto1.getWebtoon_keyword() %>'" value="찜하기" class="btn btn-success btn-lg" />
                                     	<%}else if(mwdto.getMwebtoon_seq().equals(wdto1.getWebtoon_seq())){ %>
-                                    	<input type="button" onclick="location.href='<%=wdto1.getWebtoon_link()%>'" value="찜삭제" class="btn btn-success btn-lg" />
+                                    	<input type="button" onclick="location.href='myWebtoonInfoDeleteCon.do?muser_i=<%=dto.getUser_id()%>&mwebtoon_se=<%=wdto1.getWebtoon_seq() %>&mwebtoon_ge=<%=wdto1.getWebtoon_genre()%>'" value="찜삭제" class="btn btn-success btn-lg" />
                                     	<%} %>
                                     </div>
                                     <div class="col d-grid">
@@ -283,20 +274,20 @@ https://templatemo.com/tm-559-zay-shop
             			
             		}
             		else if(ismy){
-            			out.print("<li><a class='btn btn-success text-white' href='shop-single.html'>♥ </a></li>");	
+            			out.print("<li><a class='btn btn-success text-white' href='myWebtoonDeleteCon.do?muser_i="+ dto.getUser_id() +"&mwebtoon_se="+wdto_genre.get(i).getWebtoon_seq()+"'>♥ </a></li>");	
             		}else{
-            			out.print("<li><a class='btn btn-success text-white' href='shop-single.html'><i class='far fa-heart'></i></a></li>");
+            			out.print("<li><a class='btn btn-success text-white' href='myWebtoonjoin.do?mwebtoon_se="+ wdto_genre.get(i).getWebtoon_seq() +"&muser_i="+ dto.getUser_id() +"&mwebtoon_nam="+ wdto_genre.get(i).getWebtoon_name() +"&mwebtoon_write="+ wdto_genre.get(i).getWebtoon_writer() +"&mwebtoon_conten="+ wdto_genre.get(i).getWebtoon_content() +"&mwebtoon_genr="+ wdto_genre.get(i).getWebtoon_genre() +"&mwebtoon_im="+ wdto_genre.get(i).getWebtoon_img() +"&mwebtoon_lin="+ wdto_genre.get(i).getWebtoon_link() +"&mwebtoon_keywor="+ wdto_genre.get(i).getWebtoon_keyword() +"'><i class='far fa-heart'></i></a></li>");
             		}
             		out.print("</ul>");
             		out.print("</div>");
             		out.print("</div>");
             		out.print("<div class='card-body'>");
-            		out.print("<a href='"+ wdto_genre.get(i).getWebtoon_link() +"' class='h3 text-decoration-none'>"+ wdto_genre.get(i).getWebtoon_name() +"</a>");
+            		out.print("<a href='webtoonInfoGo.do?webtoon_se="+ wdto_genre.get(i).getWebtoon_seq() +"&webtoon_ge="+ wdto_genre.get(i).getWebtoon_genre() +"&webtoon_i="+ dto.getUser_id() +"' class='h3 text-decoration-none'>"+ wdto_genre.get(i).getWebtoon_name() +"</a>");
             		//out.print("<a href ='webtoonInfoGo.do?webtoon_se="+wdto_genre.get(i).getWebtoon_seq()+"&webtoon_ge="+wdto_genre.get(i).getWebtoon_genre()+"' class='h3 text-decoration-none'>"+ wdto_genre.get(i).getWebtoon_name() +"</a>");
             		out.print("<p>웹툰작가: "+ wdto_genre.get(i).getWebtoon_writer() +"</p>");
             		out.print("<p>웹툰장르: "+ wdto_genre.get(i).getWebtoon_genre() +"</p>");
             		out.print("<ul class='w-100 list-unstyled d-flex justify-content-between mb-0'>");
-            		out.print("<li>키워드:"+ wdto_genre.get(i).getWebtoon_keyword() +"</li>");
+
             		out.print("<li class='pt-2'>");
             		out.print("<span class='product-color-dot color-dot-red float-left rounded-circle ml-1'></span>");
             		out.print("<span class='product-color-dot color-dot-blue float-left rounded-circle ml-1'></span>");

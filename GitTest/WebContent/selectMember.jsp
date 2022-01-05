@@ -12,7 +12,7 @@
 <html lang="en">
 
 <head>
-    <title>Zay Shop eCommerce HTML CSS Template</title>
+    <title>회원 관리</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="assets/js/jquery-1.11.0.min.js"></script>
@@ -105,9 +105,7 @@ https://templatemo.com/tm-559-zay-shop
                         <%if(dto==null) {%>
 
                         <%}else if(dto.getUser_yesno().equals("no")){ %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="myPage.jsp">마이페이지</a>
-                        </li>
+
                         <%}else {%>
                         <li class="nav-item">
                             <a class="nav-link" href="adminMyPage.jsp">회원관리</a>

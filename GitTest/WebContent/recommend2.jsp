@@ -1,20 +1,15 @@
+<%@page import="com.webtoon.DTO.mywebtoonDTO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.usersDAO.NoticeDAO"%>
-<%@page import="com.webtoon.DTO.NoticeDTO"%>
+<%@page import="com.usersDAO.webtoonDAO"%>
 <%@page import="com.webtoon.DTO.usersDTO"%>
+<%@page import="com.webtoon.DTO.webtoonDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-String articleSeq = request.getParameter("articleSeq");
-NoticeDAO noticeDAO = new NoticeDAO();
-NoticeDTO noticeDTO = noticeDAO.getNoticeData(articleSeq);
-
-%>
 <!DOCTYPE html>
 <html lang="en">
-
+<script src="jquery-3.6.0.min.js"></script>
 <head>
-    <title>수정하기</title>
+    <title>골라잡으세요</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -28,24 +23,26 @@ NoticeDTO noticeDTO = noticeDAO.getNoticeData(articleSeq);
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
-    <link rel="stylesheet" href="assets/css/Sqmedia.css">
-    <link rel="stylesheet" href="assets/css/Sqstyle.css">
-<!--
-    
-TemplateMo 559 Zay Shop
 
-https://templatemo.com/tm-559-zay-shop
+	    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="assets/css/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/slick-theme.css">
 
--->
+
 </head>
 
 <body>
 	<%
 		usersDTO dto = (usersDTO)session.getAttribute("dto");
 	
+		webtoonDTO wdto = (webtoonDTO)request.getAttribute("wdto");
+		
+		ArrayList<mywebtoonDTO> mwdto1 = (ArrayList<mywebtoonDTO>)session.getAttribute("mwdto1");
+		
+		ArrayList<webtoonDTO> recwdto = (ArrayList<webtoonDTO>)session.getAttribute("key_arr");
+		
+		
 	%>
-
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
         <div class="container text-light">
@@ -179,55 +176,188 @@ https://templatemo.com/tm-559-zay-shop
             </form>
         </div>
     </div>
-
-
-    <!-- Start Featured Product -->
-    <section class="bg-light">
+    
+            
+<!-- Start Article -->
+    <section class="py-5">
+        <div class="container">
+			<section class="bg-light">
         <div class="container py-5">
-            <!-- 게시판 들어가는 자리 -->
-            <div class="board_wrap">
-	            <form method ="post" action="community_edit_action.jsp?articleSeq=<%= articleSeq %>">
-	                <div class="board_title">
-	                    <strong>수정페이지</strong>
-	                    <p>글의 내용을 수정합니다.</p>
-	                </div>
-	                <div class="board_write_wrap">
-	                    <div class="board_write">
-	                        <div class="title">
-	                            <dl>
-	                                <dt>제목</dt>
-	                                <dd><input type="text" placeholder="제목 입력" id="article_subject"  name="article_subject" value="<%= noticeDTO.getArticle_subject()%>"></dd>
-	                            </dl>
-	                        </div>
-	                        <div class="info">
-	                            <dl>
-	                                <dt>글쓴이</dt>
-	                                <dd id="user_id" name="user_id"><%= noticeDTO.getUser_id() %></dd>
-	                            </dl>
-	<!--                             <dl> -->
-	<!--                                 <dt>비밀번호</dt> -->
-	<!--                                 <dd><input type="password" placeholder="비밀번호 입력" value="1234"></dd> -->
-	<!--                             </dl> -->
-	                        </div>
-	                        <div class="cont">
-	                            <textarea placeholder="내용 입력" id="article_content" name="article_content"><%= noticeDTO.getArticle_content() %></textarea>
-	                        </div>
-	                    </div>
-	                    <div class="bt_wrap">
-	                        <button type="submit" class="on" name="edit1"><a>저장</a></button>
-	                        <a href="community_list.jsp">취소</a>
-	                    </div>
-	                   
-	                </div>
-	            </form>
+
+
+            <!--Start Carousel Wrapper-->
+            <div id="carousel-related-product">
+            
+            	
+			<%
+			
+            	for(int i = 0; i < recwdto.size(); i++){
+            		// 장르에 따른 값 잘나왔는지 확인
+            		boolean ismy = false;
+            		for(int j=0;j<mwdto1.size();j++){
+            			if(mwdto1.get(j).getMwebtoon_seq().equals(recwdto.get(i).getWebtoon_seq())){
+            				ismy=true;
+            				break;
+            			}
+            		}
+            		
+            		out.print("<div class='p-2 pb-3'>");
+            		out.print("<div class='product-wap card rounded-0'>");
+            		out.print("<div class='card rounded-0'>");
+            		out.print("<img class='card-img rounded-0 img-fluid' src='"+ recwdto.get(i).getWebtoon_img() +"'>");
+            		out.print("<div class='card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center'>");
+            		out.print("<ul class='list-unstyled'>");
+            		if(mwdto1==null){
+            			
+            		}
+            		else if(ismy){
+            			out.print("<li><a class='btn btn-success text-white' href='myWebtoonDeleteCon.do?muser_i="+ dto.getUser_id() +"&mwebtoon_se="+recwdto.get(i).getWebtoon_seq()+"'>♥ </a></li>");	
+            		}else{
+            			out.print("<li><a class='btn btn-success text-white' href='myWebtoonjoin.do?mwebtoon_se="+ recwdto.get(i).getWebtoon_seq() +"&muser_i="+ dto.getUser_id() +"&mwebtoon_nam="+ recwdto.get(i).getWebtoon_name() +"&mwebtoon_write="+ recwdto.get(i).getWebtoon_writer() +"&mwebtoon_conten="+ recwdto.get(i).getWebtoon_content() +"&mwebtoon_genr="+ recwdto.get(i).getWebtoon_genre() +"&mwebtoon_im="+ recwdto.get(i).getWebtoon_img() +"&mwebtoon_lin="+ recwdto.get(i).getWebtoon_link() +"&mwebtoon_keywor="+ recwdto.get(i).getWebtoon_keyword() +"'><i class='far fa-heart'></i></a></li>");
+            		}
+            		out.print("</ul>");
+            		out.print("</div>");
+            		out.print("</div>");
+            		out.print("<div class='card-body'>");
+            		out.print("<a href='"+ recwdto.get(i).getWebtoon_link() +"' class='h3 text-decoration-none'>"+ recwdto.get(i).getWebtoon_name() +"</a>");
+            		//out.print("<a href ='webtoonInfoGo.do?webtoon_se="+wdto_genre.get(i).getWebtoon_seq()+"&webtoon_ge="+wdto_genre.get(i).getWebtoon_genre()+"' class='h3 text-decoration-none'>"+ wdto_genre.get(i).getWebtoon_name() +"</a>");
+            		out.print("<p>웹툰작가: "+ recwdto.get(i).getWebtoon_writer() +"</p>");
+            		out.print("<p>웹툰장르: "+ recwdto.get(i).getWebtoon_genre() +"</p>");
+            		out.print("<ul class='w-100 list-unstyled d-flex justify-content-between mb-0'>");
+
+            		out.print("<li class='pt-2'>");
+            		out.print("<span class='product-color-dot color-dot-red float-left rounded-circle ml-1'></span>");
+            		out.print("<span class='product-color-dot color-dot-blue float-left rounded-circle ml-1'></span>");
+            		out.print("<span class='product-color-dot color-dot-black float-left rounded-circle ml-1'></span>");
+            		out.print("<span class='product-color-dot color-dot-light float-left rounded-circle ml-1'></span>");
+            		out.print("<span class='product-color-dot color-dot-green float-left rounded-circle ml-1'></span>");
+            		out.print("</li>");
+            		out.print("</ul>");
+            		out.print("</div>");
+            		out.print("</div>");
+            		out.print("</div>");
+            		
+            	}
+			
+			
+            	
+            
+            %>		
+				
+
+				</div>
+                </div>
+    			</section>
+				
+		</div>
+        
+    </section>
+    <!-- End Article -->
+
+
+
+    
+    
+    
+    <div  class="tag_select">
+        <!-- 해시태그 검색 만들기 -->
+        
+        <div class="tag_select2">
+            <table align="center">    
+                <tr>
+                    <td><button class="tag_btn">로맨스</button></td>
+                    <td><button class="tag_btn">개그</button></td>
+                    <td><button class="tag_btn">학원물</button></td>
+                    <td><button class="tag_btn">성장물</button></td>
+                    <td><button class="tag_btn">힐링</button></td>
+                    <td><button class="tag_btn">가정</button></td>
+                    <td><button class="tag_btn">폭력</button></td>
+                    <td><button class="tag_btn">반전</button></td>
+                    <td><button class="tag_btn">종말</button></td>
+                    <td><button class="tag_btn">감성</button></td>
+                </tr>
+                <tr>
+                    <td><button class="tag_btn">공포</button></td>
+                    <td><button class="tag_btn">재난</button></td>
+                    <td><button class="tag_btn">판타지</button></td>
+                    <td><button class="tag_btn">전생회귀</button></td>
+                    <td><button class="tag_btn">먼치킨</button></td>
+                    <td><button class="tag_btn" >일상</button></td>
+                    <td><button class="tag_btn" >재능</button></td>
+                    <td><button class="tag_btn" >성장</button></td>
+                    <td><button class="tag_btn" >고생</button></td>
+                    <td><button class="tag_btn" >범죄</button></td>
+                </tr>
+                 <tr>
+                <td><button class="tag_btn">불행한</button></td>
+                <td><button class="tag_btn">고소한</button></td>
+                <td><button class="tag_btn">설레는</button></td>
+                <td><button class="tag_btn">따뜻한</button></td>
+                <td><button class="tag_btn">소름</button></td>
+                <td><button class="tag_btn">애틋한</button></td>
+                <td><button class="tag_btn">웃긴</button></td>
+                <td><button class="tag_btn">살벌한</button></td>
+                <td><button class="tag_btn">무서운</button></td>
+                <td><button class="tag_btn">외로운</button></td>
+            </tr>
+            </table>
+        </div>
+
+
+
+        
+        
+
+
+            <div>
+            <button id = btn1>검색하기</button>
             </div>
 
-
-
-            
         </div>
-    </section>
-    <!-- End Featured Product -->
+
+        <script>
+        // 클릭한 값을 가져오는 스크립트 매소드
+
+        $('.tag_btn').on('click', function(){
+            var className = $(this).attr('class');
+
+            if($(this).hasClass('clicked')){
+            	$(this).removeClass('clicked');
+                $(this).addClass('unclicked');
+            }else{
+            	$(this).removeClass('unclicked');
+                $(this).addClass('clicked');
+                
+            }
+        });
+
+        var list = [];
+
+        $('#btn1').on('click', function(){
+            list=[]; // list 초기화
+
+            var button = document.getElementsByClassName('clicked');
+
+            for(btn1 of button){
+                list.push(btn1.innerHTML);
+            }
+            console.log(list);
+            location.href="keyWebtoon.do?data="+list;
+        });
+        
+        </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   
+
+
 
 
     <!-- Start Footer -->
@@ -332,6 +462,43 @@ https://templatemo.com/tm-559-zay-shop
     <script src="assets/js/templatemo.js"></script>
     <script src="assets/js/custom.js"></script>
     <!-- End Script -->
+    
+        <!-- Start Slider Script -->
+    <script src="assets/js/slick.min.js"></script>
+    <script>
+        $('#carousel-related-product').slick({
+            infinite: true,
+            arrows: false,
+            slidesToShow: 4,
+            slidesToScroll: 3,
+            dots: true,
+            responsive: [{
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                }
+            ]
+        });
+    </script>
+    <!-- End Slider Script -->
+    
+    
 </body>
 
 </html>

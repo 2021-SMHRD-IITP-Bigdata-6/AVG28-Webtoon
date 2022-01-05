@@ -294,8 +294,10 @@ public class NoticeDAO {
 
 			String sql = "DELETE FROM T_COMMUNITY  WHERE article_seq = ? ";
 			psmt = conn.prepareStatement(sql);
-			rs = psmt.executeQuery();
 			psmt.setString(1, articleSeq);
+			
+			cnt = psmt.executeUpdate();
+
 			success = 1;
 
 		} catch (Exception e) {
@@ -308,3 +310,4 @@ public class NoticeDAO {
 		return success;
 	}
 }
+//여기 확인ㄴ

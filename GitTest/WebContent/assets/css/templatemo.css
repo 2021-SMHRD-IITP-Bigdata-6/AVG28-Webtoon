@@ -300,4 +300,8 @@ padding: 10%;
   background-position: left;
   background-size: 200%;
 }
+.pagination{
+	display: flex;
+    align-items: center;
 
+}

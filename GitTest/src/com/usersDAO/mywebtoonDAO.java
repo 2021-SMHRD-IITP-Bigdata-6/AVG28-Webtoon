@@ -157,6 +157,34 @@ public class mywebtoonDAO {
 		
 	}
 	
+	public int MyWebtoonDelete(String muser_id, String mwebtoon_seq) {
+		
+		try { 
+			
+			getConn();
+
+			String sql = "delete from t_mywebtoon where muser_id = ? and mwebtoon_seq = ?";
+
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, muser_id);
+			psmt.setString(2, mwebtoon_seq);
+			
+			cnt = psmt.executeUpdate();
+
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+
+		} finally { 
+			
+			close();
+		}
+		
+		return cnt;
+		
+	}
+	
+	
 	public ArrayList<mywebtoonDTO> selectWebtoon(String mwdto_id) {
 
 		ArrayList<mywebtoonDTO> web_arr = new ArrayList<mywebtoonDTO>();
@@ -186,6 +214,7 @@ public class mywebtoonDAO {
 
 				mwdto = new mywebtoonDTO(muser_id, mwebtoon_seq, mwebtoon_name, mwebtoon_writer, mwebtoon_content, mwebtoon_genre, mwebtoon_img, mwebtoon_link, mwebtoon_keyword);
 				web_arr.add(mwdto);
+				
 
 			}
 
@@ -202,6 +231,8 @@ public class mywebtoonDAO {
 		return web_arr;
 
 	}
+	
+	
 	
 	
 }

@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>로그인</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="jquery-3.6.0.min.js"></script>
 <title>Insert title here</title>
@@ -31,7 +31,7 @@
             </div>
         </form>
         <div class="caption">
-            <a href="Join.jsp">회원가입</a>
+            <a href="join.jsp">회원가입</a>
         </div>
         
     </section>
